@@ -1,37 +1,44 @@
 "use server";
 
-import { createSupabaseAdminClient } from "@/lib/supabase/admin";
-import { requireAdminUser } from "@/lib/supabase/server";
+import { createSupabaseServerClient, requireAdminUser } from "@/lib/supabase/server";
+import type { HomeContent } from "@/lib/landing/types";
+import { revalidatePath } from "next/cache";
 
-export async function saveHomeContent(jsonText: string) {
+export async function updateHomeContent(newContent: HomeContent) {
+  // 1. SECURITY CHECK: Pastikan user adalah Admin
   const auth = await requireAdminUser();
   if (!auth.ok) {
-    return { ok: false as const, message: auth.message };
+    throw new Error(auth.message); // Akan muncul di toast error dashboard
   }
 
-  const supabase = createSupabaseAdminClient();
+  const supabase = await createSupabaseServerClient();
   if (!supabase) {
-    return { ok: false as const, message: "Supabase env belum di-set." };
+    throw new Error("Koneksi Supabase tidak tersedia.");
   }
 
-  let parsed: unknown;
-  try {
-    parsed = JSON.parse(jsonText);
-  } catch {
-    return { ok: false as const, message: "JSON tidak valid." };
-  }
-
-  if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
-    return { ok: false as const, message: "Root JSON harus object." };
-  }
-
+  // 2. SIMPAN KE DATABASE (site_pages)
+  // Kita pakai slug 'home' sebagai identifier halaman depan
   const { error } = await supabase
     .from("site_pages")
-    .upsert({ slug: "home", content: parsed }, { onConflict: "slug" });
+    .upsert(
+      { 
+        slug: "home", 
+        content: newContent,
+        updated_at: new Date().toISOString() 
+      },
+      { onConflict: "slug" } // Jika slug 'home' sudah ada, lakukan update
+    );
 
   if (error) {
-    return { ok: false as const, message: error.message };
+    console.error("Supabase Error:", error);
+    throw new Error("Gagal menyimpan ke database. Cek log server.");
   }
 
-  return { ok: true as const, message: "Tersimpan." };
+  // 3. REVALIDATE CACHE (Penting!)
+  // Ini bikin Next.js merender ulang halaman depan & admin konten
+  // Jadi user di public langsung lihat perubahannya detik itu juga.
+  revalidatePath("/"); 
+  revalidatePath("/admin/konten");
+
+  return { success: true };
 }
