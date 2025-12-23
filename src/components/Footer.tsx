@@ -23,6 +23,12 @@ export default function Footer() {
               <Link href="/" className="text-white/70 transition hover:text-white">
                 Home
               </Link>
+              <Link href="/tentang-kami" className="text-white/70 transition hover:text-white">
+                Tentang Kami
+              </Link>
+              <Link href="/syarat-ketentuan" className="text-white/70 transition hover:text-white">
+                Syarat & Ketentuan
+              </Link>
               <Link href="#" className="text-white/70 transition hover:text-white">
                 Packages
               </Link>
