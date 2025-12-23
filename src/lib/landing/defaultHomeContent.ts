@@ -2,26 +2,26 @@ import type { HomeContent } from "./types";
 
 export const defaultHomeContent: HomeContent = {
   navbar: {
-    brandLabel: "FERRARI JAYA",
+    brandLabel: "FERRARI",
     links: [
-      { label: "Tentang", href: "/#tentang" },
-      { label: "Armada", href: "/#armada" },
-      { label: "Kontak", href: "/#kontak" },
+      { label: "Why Us", href: "/#tentang" }, // Nunjuk ke Features
+      { label: "Paket", href: "/#paket-pelajar" }, // Nunjuk ke StudentPackages
+      { label: "Galeri", href: "/#armada" }, // Nunjuk ke Gallery
+      { label: "Testi", href: "/#reviews" }, // Nunjuk ke Testimonials
     ],
-    cta: { label: "Booking Bus", href: "/booking/bus" },
+    cta: { label: "Gas Booking 🚀", href: "/booking/bus" },
   },
   hero: {
-    title: "Partner Terbaik Study Tour & Wisata Sekolah",
+    title: "MAKIN SERU BELAJARNYA",
     subtitle:
-      "Mengajak siswa belajar sambil berwisata. Solusi lengkap untuk SD, SMP, SMA, SMK, dan Umum dengan harga pelajar.",
-    primary: { label: "Lihat Paket Pelajar", href: "/#paket-pelajar" },
-    secondary: { label: "Konsultasi Guru", href: "https://wa.me/" },
+      "Bukan sekadar jalan-jalan. Ini pengalaman core memory buat siswa SD, SMP, SMA & Umum. Harga pelajar, fasilitas sultan.",
+    primary: { label: "Cek Paket Hits", href: "/#paket-pelajar" },
+    secondary: { label: "Chat Admin", href: "https://wa.me/" },
   },
   trustedBy: {
-    eyebrow: "TRUSTED",
-    title: "Dipercaya Oleh",
-    subtitle:
-      "Sekolah dan instansi yang mempercayakan perjalanan edukasi bersama kami.",
+    eyebrow: "TRUSTED PARTNERS",
+    title: "Geng Juara Kita",
+    subtitle: "Sekolah hits yang sudah mempercayakan tripnya ke kami.",
     schools: [
       "SMKN 1 Blitar",
       "MAN 2 Malang",
@@ -34,8 +34,8 @@ export const defaultHomeContent: HomeContent = {
     ],
   },
   features: {
-    eyebrow: "FEATURES",
-    title: "Kenapa Ferrari Jaya Group",
+    eyebrow: "KENAPA KAMI?",
+    title: "Ferrari Jaya Group",
     subtitle: "Desain layanan yang rapi, terasa cepat, dan tetap fun.",
     items: [
       {
@@ -47,7 +47,7 @@ export const defaultHomeContent: HomeContent = {
         bgClass: "bg-ocean/10",
       },
       {
-        title: "Harga Ramah Pelajar",
+        title: "Harga Pelajar",
         description:
           "Paket hemat khusus sekolah tanpa mengurangi kualitas pelayanan.",
         icon: "Wallet",
@@ -55,7 +55,7 @@ export const defaultHomeContent: HomeContent = {
         bgClass: "bg-ferrari/10",
       },
       {
-        title: "Armada Bus Terbaru",
+        title: "Bus Terbaru",
         description:
           "Kenyamanan & keselamatan siswa prioritas utama sepanjang perjalanan.",
         icon: "Bus",
@@ -65,15 +65,15 @@ export const defaultHomeContent: HomeContent = {
     ],
   },
   packages: {
-    eyebrow: "STUDY TOUR",
-    title: "Paket Pelajar & Rombongan",
+    eyebrow: "LET'S GO",
+    title: "Pilih Petualanganmu",
     subtitle:
       "Fokus untuk sekolah: Study Tour, Kunjungan Industri SMK, dan Wisata Umum.",
     consultHref: "https://wa.me/",
     items: [
       {
         slug: "jogja",
-        title: "Paket Study Tour Jogja",
+        title: "Study Tour Jogja",
         subtitle: "Candi, museum, edukasi budaya + itinerary sekolah yang rapi.",
         badges: [
           { label: "SMP/MTs", className: "bg-sun text-slate-900" },
@@ -82,7 +82,7 @@ export const defaultHomeContent: HomeContent = {
       },
       {
         slug: "industri",
-        title: "Kunjungan Industri Surabaya",
+        title: "Kunjungan Industri",
         subtitle: "Program khusus SMK: kunjungan pabrik/instansi + dokumentasi.",
         badges: [{ label: "SMK", className: "bg-leaf text-slate-900" }],
       },
@@ -108,86 +108,85 @@ export const defaultHomeContent: HomeContent = {
     ],
   },
   howItWorks: {
-    eyebrow: "PROCESS",
-    title: "Alur Pemesanan Mudah",
-    subtitle:
-      "Dari konsultasi sampai berangkat — jelas, cepat, dan enak untuk panitia sekolah.",
+    eyebrow: "EASY PROCESS",
+    title: "Cara Kerja Kami",
+    subtitle: "Sat set wat wet, langsung berangkat.",
     steps: [
       { title: "Konsultasi", description: "Chat kebutuhan.", dotClass: "bg-ocean" },
       { title: "Penawaran", description: "Kami kirim proposal.", dotClass: "bg-ferrari" },
       { title: "Survey", description: "Cek unit bus.", dotClass: "bg-sun" },
-      { title: "Deal & Berangkat", description: "Fix jadwal, berangkat!", dotClass: "bg-leaf" },
+      { title: "Deal & Gas", description: "Fix jadwal, berangkat!", dotClass: "bg-leaf" },
     ],
   },
   destinations: {
-    eyebrow: "DESTINATIONS",
-    title: "Popular Destinations",
+    eyebrow: "WISATA HITS",
+    title: "Destinasi Populer",
     subtitle: "Pilih destinasi favorit dan mulai rencanakan perjalanan paling seru.",
     items: [
       {
         title: "Bali",
-        price: "Mulai Rp 1.250.000",
+        price: "Rp 1.250.000",
         badge: "Best Seller",
         badgeClass: "bg-sun text-slate-900",
         gradientClass: "from-ferrari/60 via-plum/45 to-ocean/60",
-        ctaLabel: "Lihat Paket",
+        ctaLabel: "Cek Detail",
         ctaHref: "/#paket-pelajar",
       },
       {
         title: "Bromo",
-        price: "Mulai Rp 950.000",
+        price: "Rp 950.000",
         badge: "New",
         badgeClass: "bg-leaf text-slate-900",
         gradientClass: "from-ocean/60 via-leaf/45 to-sun/55",
-        ctaLabel: "Lihat Paket",
+        ctaLabel: "Cek Detail",
         ctaHref: "/#paket-pelajar",
       },
       {
         title: "Lombok",
-        price: "Mulai Rp 1.150.000",
+        price: "Rp 1.150.000",
         badge: "Family",
         badgeClass: "bg-plum text-white",
         gradientClass: "from-plum/60 via-ferrari/45 to-sun/55",
-        ctaLabel: "Lihat Paket",
+        ctaLabel: "Cek Detail",
         ctaHref: "/#paket-pelajar",
       },
     ],
   },
   gallery: {
-    eyebrow: "GALLERY",
+    eyebrow: "OUR MOMENTS",
     title: "Dokumentasi Keseruan",
     subtitle: "Momen terbaik dari study tour, kunjungan industri, dan wisata rombongan.",
     items: [
       {
-        src: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1600&q=80",
+        src: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80",
         caption: "SMAN 1 di Bali",
       },
       {
-        src: "https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=1600&q=80",
+        src: "https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=800&q=80",
         caption: "Study Tour di Jogja",
       },
       {
-        src: "https://images.unsplash.com/photo-1529078155058-5d716f45d604?auto=format&fit=crop&w=1600&q=80",
-        caption: "Armada Bus Berangkat Pagi",
+        src: "https://images.unsplash.com/photo-1529078155058-5d716f45d604?auto=format&fit=crop&w=800&q=80",
+        caption: "Armada Bus Berangkat",
       },
       {
-        src: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1600&q=80",
-        caption: "Kenyamanan di Dalam Bus",
+        src: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80",
+        caption: "Interior Nyaman",
       },
       {
-        src: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1600&q=80",
-        caption: "Kunjungan Industri TVRI",
+        src: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
+        caption: "Kunjungan TVRI",
       },
       {
-        src: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1600&q=80",
-        caption: "Rombongan Siswa Happy",
+        src: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80",
+        caption: "Siswa Happy",
       },
     ],
   },
   testimonials: {
     eyebrow: "REVIEWS",
-    title: "Kata Mereka",
-    subtitle: "Cerita singkat dari guru dan pembina yang sudah berangkat bersama.",
+    title: "Apa Kata Mereka?",
+    subtitle: "Jujur dari hati, no setting-setting club.",
     items: [
       {
         name: "Budi Santoso",
@@ -216,7 +215,7 @@ export const defaultHomeContent: HomeContent = {
     ],
   },
   cta: {
-    title: "Rencanakan Study Tour Tanpa Pusing!",
+    title: "JANGAN CUMA WACANA, AYO BERANGKAT!",
     description:
       "Kami bantu susun itinerary, izin, hingga laporan perjalanan. Guru tinggal terima beres.",
     whatsappHref: "https://wa.me/",
@@ -224,40 +223,39 @@ export const defaultHomeContent: HomeContent = {
   },
   faq: {
     eyebrow: "FAQ",
-    title: "Frequently Asked Questions",
-    subtitle: "Pertanyaan yang paling sering ditanyakan terkait study tour dan rombongan.",
+    title: "Yang Sering Ditanyain",
+    subtitle: "Pertanyaan seputar study tour dan teknis pembayaran.",
     items: [
       {
-        q: "Bisa pembayaran bertahap untuk study tour?",
-        a: "Bisa. Umumnya kami bantu skema DP + pelunasan sebelum keberangkatan (menyesuaikan kebijakan sekolah dan jadwal trip).",
+        q: "Bisa pembayaran bertahap?",
+        a: "Bisa banget. Kami bantu skema DP + pelunasan yang fleksibel menyesuaikan kas sekolah.",
       },
       {
-        q: "Kapasitas bus berapa dan konfigurasi tempat duduknya?",
-        a: "Tergantung armada. Umumnya 40–50 seat. Kami rekomendasikan kapasitas sesuai jumlah siswa + pendamping agar tetap nyaman.",
+        q: "Kapasitas bus berapa?",
+        a: "Ada Big Bus (50 seat) dan Medium Bus (30-35 seat). Semua unit terbaru dengan AC dingin & Karaoke.",
       },
       {
-        q: "Apakah sudah termasuk asuransi perjalanan?",
-        a: "Bisa disiapkan sesuai paket. Kami jelaskan opsi asuransi dan cakupan sejak awal agar transparan untuk sekolah.",
+        q: "Apa sudah termasuk asuransi?",
+        a: "Ya, keselamatan nomor satu. Paket kami opsional include asuransi perjalanan Jasa Raharja Putra.",
       },
     ],
   },
   footer: {
-    description: "Travel & Tour terpercaya untuk perjalanan yang seru, nyaman, dan penuh warna.",
+    description: "Partner perjalanan edukasi & wisata nomor satu untuk sekolah kekinian.",
     quickLinks: [
       { label: "Home", href: "/" },
-      { label: "Tentang Kami", href: "/tentang-kami" },
-      { label: "Syarat & Ketentuan", href: "/syarat-ketentuan" },
-      { label: "Packages", href: "/#paket-pelajar" },
-      { label: "Fleet", href: "/#armada" },
-      { label: "Contact", href: "/#kontak" },
+      { label: "Why Us", href: "/#tentang" },
+      { label: "Paket", href: "/#paket-pelajar" },
+      { label: "Galeri", href: "/#armada" },
+      { label: "Kontak", href: "/#kontak" },
     ],
     contact: {
-      addressLabel: "Address",
-      address: "Jl. Contoh Alamat No. 123, Indonesia",
-      phoneLabel: "Phone",
-      phone: "+62 8xx-xxxx-xxxx",
+      addressLabel: "Markas",
+      address: "Jl. Ferrari No. 1, Jawa Timur",
+      phoneLabel: "WhatsApp",
+      phone: "+62 812-3456-7890",
       emailLabel: "Email",
-      email: "hello@ferrarijaya.co.id",
+      email: "booking@ferrarijaya.com",
     },
   },
 };

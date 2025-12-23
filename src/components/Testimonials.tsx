@@ -22,7 +22,7 @@ export default function Testimonials({ content }: { content?: TestimonialsConten
   const items = content?.items ?? [];
 
   return (
-    <section className="bg-white py-24 overflow-hidden">
+    <section id="reviews" className="bg-white py-24 overflow-hidden scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-slate-900 mb-6">

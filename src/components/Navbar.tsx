@@ -15,11 +15,12 @@ export default function Navbar({ content }: { content?: NavbarContent }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
+  // Ambil data dari props, atau default
   const brandLabel = content?.brandLabel ?? "FERRARI";
   const links = content?.links ?? [
-    { label: "Tentang", href: "/#tentang" },
-    { label: "Armada", href: "/#armada" },
-    { label: "Destinasi", href: "/#destinasi" },
+    { label: "Why Us", href: "/#tentang" },
+    { label: "Paket", href: "/#paket-pelajar" },
+    { label: "Galeri", href: "/#armada" },
   ];
   const cta = content?.cta ?? { label: "Gas Booking 🚀", href: "/booking/bus" };
 
@@ -40,13 +41,12 @@ export default function Navbar({ content }: { content?: NavbarContent }) {
           className={`
             relative flex items-center justify-between px-2 py-2 transition-all duration-300
             ${isScrolled 
-              ? "w-full max-w-4xl rounded-full bg-white/70 backdrop-blur-xl border border-white/40 shadow-xl shadow-black/5" 
+              ? "w-full max-w-4xl rounded-full bg-white/80 backdrop-blur-xl border border-white/40 shadow-xl shadow-black/5" 
               : "w-full max-w-6xl rounded-2xl bg-transparent"}
           `}
         >
           {/* Brand */}
           <Link href="/" className="pl-4 group relative flex items-center gap-2">
-            <div className="absolute inset-0 bg-acid blur-xl opacity-0 transition-opacity group-hover:opacity-40 rounded-full" />
             <span className="relative text-xl font-black tracking-tighter italic">
               <span className="text-ferrari">{brandLabel}</span>
               <span className="text-slate-800">TOUR</span>
@@ -54,12 +54,12 @@ export default function Navbar({ content }: { content?: NavbarContent }) {
           </Link>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-1 bg-white/50 p-1.5 rounded-full border border-white/50 backdrop-blur-md">
+          <div className={`hidden md:flex items-center gap-1 p-1.5 rounded-full ${!isScrolled && "bg-white/50 border border-white/50 backdrop-blur-md"}`}>
             {links.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="px-5 py-2 rounded-full text-sm font-bold text-slate-600 hover:bg-white hover:text-black hover:shadow-sm transition-all duration-200"
+                className="px-5 py-2 rounded-full text-sm font-bold text-slate-600 hover:bg-white hover:text-ferrari hover:shadow-sm transition-all duration-200"
               >
                 {item.label}
               </Link>
@@ -70,7 +70,7 @@ export default function Navbar({ content }: { content?: NavbarContent }) {
           <div className="flex items-center gap-2 pr-1">
             <Link
               href={cta.href}
-              className="hidden md:inline-flex items-center gap-2 rounded-full bg-black px-6 py-3 text-sm font-bold text-white transition hover:scale-105 hover:bg-ferrari active:scale-95 shadow-lg shadow-ferrari/20"
+              className="hidden md:inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-bold text-white transition hover:scale-105 hover:bg-ferrari active:scale-95 shadow-lg shadow-ferrari/20"
             >
               {cta.label}
               <Sparkles className="w-4 h-4 text-acid" />
@@ -108,7 +108,7 @@ export default function Navbar({ content }: { content?: NavbarContent }) {
               ))}
               <Link
                 href={cta.href}
-                className="mt-2 flex items-center justify-center gap-2 w-full rounded-xl bg-ferrari py-4 text-white font-bold"
+                className="mt-2 flex items-center justify-center gap-2 w-full rounded-xl bg-ferrari py-4 text-white font-bold shadow-lg shadow-ferrari/30"
               >
                 {cta.label}
               </Link>
