@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { Instagram } from "lucide-react";
 
 type GalleryItem = {
   src: string;
@@ -15,29 +16,32 @@ type GalleryContent = {
   items: GalleryItem[];
 };
 
-function GalleryCard({ src, caption }: GalleryItem) {
+function GalleryCard({ src, caption, index }: GalleryItem & { index: number }) {
+  // Random rotation for scrapbook effect
+  const rotateVal = index % 2 === 0 ? 2 : -2;
+
   return (
     <motion.figure
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.18, ease: [0.2, 0.8, 0.2, 1] }}
-      className="group relative mb-5 overflow-hidden rounded-3xl bg-slate-100 shadow-sm ring-1 ring-black/5"
+      whileHover={{ scale: 1.05, rotate: 0, zIndex: 10 }}
+      initial={{ rotate: rotateVal }}
+      className="group relative mb-8 overflow-hidden rounded-3xl border-[6px] border-white bg-white shadow-lg transition-all"
       style={{ breakInside: "avoid" }}
     >
-      <div className="relative">
+      <div className="relative overflow-hidden rounded-xl bg-slate-200">
         <Image
           src={src}
           alt={caption}
-          width={1200}
-          height={800}
-          className="h-auto w-full origin-center scale-100 object-cover transition-transform duration-300 ease-out group-hover:scale-[1.06]"
+          width={600}
+          height={400}
+          className="h-auto w-full scale-100 object-cover transition-transform duration-500 group-hover:scale-110"
           loading="lazy"
-          referrerPolicy="no-referrer"
         />
-        <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-slate-950/60 via-slate-950/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 p-5">
-          <div className="inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-900 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        
+        {/* Caption Overlay */}
+        <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <span className="font-bold text-white text-lg tracking-tight px-4 text-center">
             {caption}
-          </div>
+          </span>
         </div>
       </div>
     </motion.figure>
@@ -48,24 +52,31 @@ export default function Gallery({ content }: { content?: GalleryContent }) {
   const items = content?.items ?? [];
 
   return (
-    <section id="armada" className="bg-white scroll-mt-24">
-      <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
-        <div className="max-w-2xl">
-          <p className="text-xs font-semibold tracking-[0.25em] text-slate-500">
-            {content?.eyebrow ?? "GALLERY"}
-          </p>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            {content?.title ?? "Dokumentasi Keseruan"}
-          </h2>
-          <p className="mt-4 text-base leading-7 text-slate-600">
-            {content?.subtitle ??
-              "Momen terbaik dari study tour, kunjungan industri, dan wisata rombongan."}
-          </p>
+    <section id="galeri" className="bg-slate-50 py-24 scroll-mt-24 border-t border-slate-200">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="flex flex-col md:flex-row items-end justify-between gap-6 mb-16">
+            <div className="max-w-2xl">
+                <span className="text-ferrari font-black tracking-widest text-sm uppercase mb-2 block">Our Moments</span>
+                <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slate-900">
+                    DOKUMENTASI SERU 📸
+                </h2>
+                <p className="mt-4 text-lg font-medium text-slate-600">
+                    Bukan sekadar jalan-jalan, tapi bikin kenangan core memory!
+                </p>
+            </div>
+            <a 
+                href="https://instagram.com" 
+                target="_blank"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-slate-200 font-bold text-slate-900 shadow-sm hover:text-pink-600 hover:border-pink-200 hover:bg-pink-50 transition-colors"
+            >
+                <Instagram className="w-5 h-5" />
+                <span>Follow Kami</span>
+            </a>
         </div>
 
-        <div className="mt-10 columns-1 gap-5 sm:columns-2 lg:columns-3">
-          {items.map((item) => (
-            <GalleryCard key={item.caption} {...item} />
+        <div className="columns-1 gap-6 sm:columns-2 lg:columns-3 space-y-6">
+          {items.map((item, idx) => (
+            <GalleryCard key={item.caption} {...item} index={idx} />
           ))}
         </div>
       </div>
