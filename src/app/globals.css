@@ -1,43 +1,62 @@
 @import "tailwindcss";
 
 :root {
+  /* Gen Alpha Vibe: White background but with deep contrast text */
   --background: #ffffff;
-  --foreground: #0b1220;
+  --foreground: #09090b; /* Zinc 950 */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  --color-ferrari: #ff2800;
-  --color-ocean: #00b4d8;
-  --color-sun: #ffd166;
-  --color-leaf: #06d6a0;
-  --color-plum: #9d4edd;
+  /* New Colorful Palette */
+  --color-ferrari: #ff2800;      /* Merah Ferrari Iconic */
+  --color-acid: #ccff00;         /* Hijau Neon Gen Z/Alpha */
+  --color-purple: #b0fb5d;       /* Ungu Elektrik */
+  --color-electric: #3b82f6;     /* Biru Terang */
+  --color-hotpink: #ff0080;      /* Pink Menyala */
+  
+  --font-display: var(--font-geist-sans), ui-sans-serif, system-ui;
+  
+  /* Animations */
+  @keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); }
+  }
+
+  --animate-blob: blob 7s infinite;
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-marquee: marquee 25s linear infinite;
 }
 
 body {
-  background: #ffffff;
+  background: var(--background);
   color: var(--foreground);
+  /* Halus di mata */
+  -webkit-font-smoothing: antialiased;
 }
 
-@layer utilities {
-  @keyframes blob {
-    0% {
-      transform: translate3d(0px, 0px, 0) scale(1);
-    }
-    33% {
-      transform: translate3d(28px, -18px, 0) scale(1.08);
-    }
-    66% {
-      transform: translate3d(-22px, 22px, 0) scale(0.96);
-    }
-    100% {
-      transform: translate3d(0px, 0px, 0) scale(1);
-    }
-  }
-
-  .animate-blob {
-    animation: blob 18s ease-in-out infinite;
-  }
+/* Custom Scrollbar biar aesthetic */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #ff2800, #ff0080);
+  border-radius: 10px;
 }

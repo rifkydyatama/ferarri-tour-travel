@@ -1,5 +1,7 @@
 import LoginForm from "@/components/auth/LoginForm";
 
+export const runtime = "edge";
+
 export default async function AdminLoginPage({
   searchParams,
 }: {
