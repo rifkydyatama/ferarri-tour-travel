@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import {
   BadgeCheck,
   Banknote,
+  Building2,
   CalendarDays,
   CreditCard,
   FileText,
