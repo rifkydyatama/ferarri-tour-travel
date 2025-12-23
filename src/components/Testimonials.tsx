@@ -34,7 +34,7 @@ export default function Testimonials({ content }: { content?: TestimonialsConten
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
-          {items.map((t, i) => (
+          {items.map((t) => (
             <motion.div
               key={t.name}
               whileHover={{ y: -8 }}
@@ -44,7 +44,7 @@ export default function Testimonials({ content }: { content?: TestimonialsConten
               
               <div>
                 <p className="mb-8 text-lg font-medium leading-relaxed text-slate-700">
-                  "{t.quote}"
+                  &ldquo;{t.quote}&rdquo;
                 </p>
               </div>
 

@@ -25,7 +25,9 @@ export default function StudentPackages({ content }: { content?: StudentPackages
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div className="max-w-2xl">
-            <span className="font-mono text-acid font-bold tracking-widest uppercase mb-2 block">Let's Go!</span>
+            <span className="font-mono text-acid font-bold tracking-widest uppercase mb-2 block">
+              {"Let's Go!"}
+            </span>
             <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slate-900">
               PILIH PETUALANGANMU
             </h2>

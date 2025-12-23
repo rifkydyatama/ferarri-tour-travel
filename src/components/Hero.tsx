@@ -12,7 +12,6 @@ type HeroContent = {
 };
 
 export default function Hero({ content }: { content?: HeroContent }) {
-  const title = content?.title ?? "STUDY TOUR LEVEL UP!";
   const subtitle = content?.subtitle ?? "Bukan sekadar jalan-jalan. Ini pengalaman core memory buat siswa SD, SMP, SMA & Umum. Harga pelajar, fasilitas sultan.";
   const primary = content?.primary ?? { label: "Cek Paket Hits", href: "/#paket-pelajar" };
   const secondary = content?.secondary ?? { label: "Chat Admin", href: "https://wa.me/" };

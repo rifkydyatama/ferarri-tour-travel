@@ -18,13 +18,16 @@
   --color-hotpink: #ff0080;      /* Pink Menyala */
   
   --font-display: var(--font-geist-sans), ui-sans-serif, system-ui;
+
   @keyframes marquee2 {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-100%); }
-}
-.animate-marquee2 {
-  animation: marquee2 25s linear infinite;
-}
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
   /* Animations */
   @keyframes blob {
     0% { transform: translate(0px, 0px) scale(1); }
@@ -46,6 +49,13 @@
   --animate-blob: blob 7s infinite;
   --animate-float: float 3s ease-in-out infinite;
   --animate-marquee: marquee 25s linear infinite;
+  --animate-marquee2: marquee2 25s linear infinite;
+}
+
+@layer utilities {
+  .animate-marquee2 {
+    animation: var(--animate-marquee2);
+  }
 }
 
 body {

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Bus, GraduationCap, Wallet, Star, Zap, ShieldCheck } from "lucide-react";
+import { Bus, GraduationCap, Wallet, Star } from "lucide-react";
 
 type FeatureItem = {
   title: string;
