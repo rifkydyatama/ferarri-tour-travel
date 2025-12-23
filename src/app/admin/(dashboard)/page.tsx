@@ -1,4 +1,4 @@
-import { ArrowDownRight, ArrowUpRight, Banknote, Calendar, Download, Filter } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Calendar, Download, Filter } from "lucide-react";
 
 export default function KeuanganPage() {
   // Dummy Data Transaksi

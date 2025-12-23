@@ -15,13 +15,17 @@ export default function LandingContentEditor({ initialContent }: { initialConten
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   // Helper untuk update state nested
-  const updateSection = (section: keyof HomeContent, key: string, value: any) => {
+    const updateSection = <S extends keyof HomeContent, K extends keyof HomeContent[S]>(
+        section: S,
+        key: K,
+        value: HomeContent[S][K],
+    ) => {
     setContent((prev) => ({
       ...prev,
       [section]: {
         ...prev[section],
         [key]: value,
-      },
+            } as HomeContent[S],
     }));
   };
 
@@ -32,7 +36,7 @@ export default function LandingContentEditor({ initialContent }: { initialConten
       // Panggil Server Action untuk save ke file/DB
       await updateHomeContent(content);
       setMessage({ type: "success", text: "Berhasil update konten! 🎉" });
-    } catch (error) {
+        } catch {
       setMessage({ type: "error", text: "Gagal menyimpan. Coba lagi." });
     } finally {
       setIsSaving(false);
