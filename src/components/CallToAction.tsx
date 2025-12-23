@@ -4,6 +4,7 @@ import Link from "next/link";
 
 export default function CallToAction() {
   const whatsappHref = "https://wa.me/";
+  const proposalHref = "#";
 
   return (
     <section className="bg-white">
@@ -18,21 +19,30 @@ export default function CallToAction() {
           <div className="relative flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-center">
             <div className="max-w-2xl">
               <h2 className="text-balance text-3xl font-extrabold tracking-tight sm:text-4xl">
-                Ready for an Unforgettable Holiday?
+                Rencanakan Study Tour Tanpa Pusing!
               </h2>
               <p className="mt-3 text-sm leading-7 text-white/90 sm:text-base">
-                Konsultasi rute, jadwal, dan paket wisata. Kami bantu pilih yang paling cocok.
+                Kami bantu susun itinerary, izin, hingga laporan perjalanan. Guru tinggal terima beres.
               </p>
             </div>
 
-            <Link
-              href={whatsappHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm font-semibold text-ferrari shadow-sm transition hover:bg-white/90"
-            >
-              Chat WhatsApp
-            </Link>
+            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
+              <Link
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm font-semibold text-ferrari shadow-sm transition hover:bg-white/90"
+              >
+                Konsultasi WA
+              </Link>
+
+              <Link
+                href={proposalHref}
+                className="inline-flex items-center justify-center rounded-full border border-white/60 bg-transparent px-7 py-3 text-sm font-semibold text-white transition hover:border-white/80"
+              >
+                Download Proposal
+              </Link>
+            </div>
           </div>
         </div>
       </div>
