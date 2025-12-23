@@ -9,6 +9,8 @@ import {
   XCircle,
 } from "lucide-react";
 
+export const runtime = "edge";
+
 type PackageData = {
   slug: string;
   title: string;
