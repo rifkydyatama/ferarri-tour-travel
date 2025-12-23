@@ -41,7 +41,7 @@ export default function Features({ content }: { content?: FeaturesContent }) {
       <div className="mx-auto max-w-6xl px-6 relative z-10">
         <div className="max-w-3xl mb-12">
           <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slate-900 mb-4">
-            KENAPA HARUS <span className="text-transparent bg-clip-text bg-gradient-to-r from-ferrari to-purple">FERRARI?</span>
+            KENAPA HARUS <span className="text-transparent bg-clip-text bg-linear-to-r from-ferrari to-purple">FERRARI?</span>
           </h2>
           <p className="text-lg text-slate-600 font-medium leading-relaxed">
             {content?.subtitle ?? "Bukan travel biasa. Kita bikin standar baru buat trip sekolah yang anti-boring, aman, dan pastinya aesthetic buat story IG."}
@@ -57,7 +57,7 @@ export default function Features({ content }: { content?: FeaturesContent }) {
               <motion.div
                 key={title}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className={`group relative overflow-hidden rounded-[2rem] bg-white p-8 shadow-sm border border-slate-100 transition-all duration-300 ${style.border} ${style.shadow} hover:shadow-xl`}
+                className={`group relative overflow-hidden rounded-4xl bg-white p-8 shadow-sm border border-slate-100 transition-all duration-300 ${style.border} ${style.shadow} hover:shadow-xl`}
               >
                 <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-slate-50 transition-colors group-hover:bg-slate-100" />
                 
@@ -66,7 +66,7 @@ export default function Features({ content }: { content?: FeaturesContent }) {
                     <Icon className={`h-7 w-7 ${style.iconColor}`} />
                   </div>
                   
-                  <h3 className="text-2xl font-black tracking-tight text-slate-900 mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-slate-900 group-hover:to-slate-600">
+                  <h3 className="text-2xl font-black tracking-tight text-slate-900 mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-r group-hover:from-slate-900 group-hover:to-slate-600">
                     {title}
                   </h3>
                   <p className="text-base font-medium leading-relaxed text-slate-500">

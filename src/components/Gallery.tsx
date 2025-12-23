@@ -66,7 +66,8 @@ export default function Gallery({ content }: { content?: GalleryContent }) {
             </div>
             <a 
                 href="https://instagram.com" 
-                target="_blank"
+              target="_blank"
+              rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-slate-200 font-bold text-slate-900 shadow-sm hover:text-pink-600 hover:border-pink-200 hover:bg-pink-50 transition-colors"
             >
                 <Instagram className="w-5 h-5" />

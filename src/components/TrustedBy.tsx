@@ -30,7 +30,7 @@ export default function TrustedBy({ content }: { content?: TrustedByContent }) {
               key={`${name}-${idx}`}
               className="inline-flex items-center gap-3 rounded-full border-2 border-slate-100 bg-white px-6 py-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] transition-transform hover:-translate-y-1 hover:border-ferrari hover:shadow-ferrari/20 mx-2"
             >
-              <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-ferrari to-acid flex items-center justify-center text-white font-bold text-xs shrink-0">
+              <div className="h-8 w-8 rounded-full bg-linear-to-tr from-ferrari to-acid flex items-center justify-center text-white font-bold text-xs shrink-0">
                 FJ
               </div>
               <span className="text-sm font-bold text-slate-700 uppercase tracking-wide">
@@ -47,7 +47,7 @@ export default function TrustedBy({ content }: { content?: TrustedByContent }) {
               key={`${name}-${idx}-clone`}
               className="inline-flex items-center gap-3 rounded-full border-2 border-slate-100 bg-white px-6 py-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] transition-transform hover:-translate-y-1 hover:border-ferrari hover:shadow-ferrari/20 mx-2"
             >
-              <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-ferrari to-acid flex items-center justify-center text-white font-bold text-xs shrink-0">
+              <div className="h-8 w-8 rounded-full bg-linear-to-tr from-ferrari to-acid flex items-center justify-center text-white font-bold text-xs shrink-0">
                 FJ
               </div>
               <span className="text-sm font-bold text-slate-700 uppercase tracking-wide">
@@ -58,8 +58,8 @@ export default function TrustedBy({ content }: { content?: TrustedByContent }) {
         </div>
         
         {/* Fade edges */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-linear-to-r from-white to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-linear-to-l from-white to-transparent z-10" />
       </div>
     </section>
   );

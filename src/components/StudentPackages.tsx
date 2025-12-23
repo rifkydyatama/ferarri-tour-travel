@@ -50,7 +50,7 @@ export default function StudentPackages({ content }: { content?: StudentPackages
               viewport={{ once: true }}
               className="group relative flex flex-col justify-between rounded-[2.5rem] bg-slate-50 p-2 transition-all hover:bg-black hover:shadow-2xl hover:shadow-ferrari/20"
             >
-              <div className="rounded-[2rem] bg-white p-6 h-full border border-slate-100 group-hover:border-transparent transition-colors">
+              <div className="rounded-4xl bg-white p-6 h-full border border-slate-100 group-hover:border-transparent transition-colors">
                 <div className="flex flex-wrap gap-2 mb-6">
                   {pkg.badges.map((b) => (
                     <span

@@ -45,13 +45,13 @@ export default function Destinations({ content }: { content?: DestinationsConten
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ delay: i * 0.1 }}
               whileHover={{ y: -10 }}
-              className="group relative h-[400px] overflow-hidden rounded-[2.5rem] bg-slate-200 shadow-lg"
+              className="group relative h-100 overflow-hidden rounded-[2.5rem] bg-slate-200 shadow-lg"
             >
               {/* Image Placeholder (Ganti real image nanti) */}
               <div className="absolute inset-0 bg-slate-300 transition-transform duration-700 group-hover:scale-110" />
-              <div className={`absolute inset-0 opacity-40 mix-blend-overlay transition-opacity group-hover:opacity-60 bg-gradient-to-br ${item.gradientClass || "from-ferrari to-purple"}`} />
+              <div className={`absolute inset-0 opacity-40 mix-blend-overlay transition-opacity group-hover:opacity-60 bg-linear-to-br ${item.gradientClass || "from-ferrari to-purple"}`} />
               
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
 
               {/* Price Tag Sticker */}
               <div className="absolute right-4 top-4 rotate-3 transform rounded-2xl bg-white px-4 py-2 font-black text-slate-900 shadow-xl transition-transform group-hover:rotate-6 group-hover:scale-110">

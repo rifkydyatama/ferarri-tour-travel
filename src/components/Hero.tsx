@@ -21,13 +21,13 @@ export default function Hero({ content }: { content?: HeroContent }) {
       
       {/* Background Gradients (The Aura) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-300/30 rounded-full blur-[100px] mix-blend-multiply animate-blob" />
-        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-acid/30 rounded-full blur-[100px] mix-blend-multiply animate-blob [animation-delay:2s]" />
-        <div className="absolute -bottom-32 left-1/2 w-[600px] h-[600px] bg-ferrari/10 rounded-full blur-[120px] mix-blend-multiply animate-blob [animation-delay:4s]" />
+        <div className="absolute top-0 left-1/4 h-125 w-125 rounded-full bg-purple-300/30 blur-[100px] mix-blend-multiply animate-blob" />
+        <div className="absolute top-0 right-1/4 h-125 w-125 rounded-full bg-acid/30 blur-[100px] mix-blend-multiply animate-blob [animation-delay:2s]" />
+        <div className="absolute -bottom-32 left-1/2 h-150 w-150 rounded-full bg-ferrari/10 blur-[120px] mix-blend-multiply animate-blob [animation-delay:4s]" />
       </div>
 
       {/* Grid Pattern overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px] mask-[radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
 
       <div className="relative z-10 mx-auto max-w-6xl px-6 text-center">
         
@@ -50,7 +50,7 @@ export default function Hero({ content }: { content?: HeroContent }) {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-balance text-6xl font-black tracking-tighter sm:text-7xl md:text-8xl lg:text-9xl text-slate-900"
         >
-          MAKIN <span className="bg-gradient-to-r from-ferrari via-pink-500 to-purple-600 bg-clip-text text-transparent">SERU</span>
+          MAKIN <span className="bg-linear-to-r from-ferrari via-pink-500 to-purple-600 bg-clip-text text-transparent">SERU</span>
           <br />
           <span className="relative inline-block">
             BELAJARNYA
@@ -99,7 +99,7 @@ export default function Hero({ content }: { content?: HeroContent }) {
       </div>
       
       {/* Decorative Bottom Fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white to-transparent pointer-events-none" />
     </section>
   );
 }

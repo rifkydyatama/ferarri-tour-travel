@@ -1,5 +1,6 @@
-import { Building2, PieChart, ReceiptText, Wallet } from "lucide-react";
+import { Building2, PieChart, ReceiptText, Wallet, ArrowUpRight, TrendingUp } from "lucide-react";
 
+// ... (Bagian data dummy & helper function formatIDR tetap sama seperti kode kamu sebelumnya)
 type VendorPaymentRow = {
   vendorType: "Bus PO" | "Hotel";
   vendorName: string;
@@ -55,215 +56,168 @@ function formatIDR(value: number) {
 function statusBadgeClass(status: VendorPaymentRow["status"]) {
   switch (status) {
     case "Lunas":
-      return "bg-leaf/15 text-slate-900 ring-1 ring-leaf/30";
+      return "bg-leaf text-white";
     case "DP Dibayar":
-      return "bg-ocean/15 text-slate-900 ring-1 ring-ocean/30";
+      return "bg-sun text-slate-900";
     default:
-      return "bg-[var(--color-ferrari)]/10 text-slate-900 ring-1 ring-[var(--color-ferrari)]/25";
+      return "bg-ferrari text-white";
   }
 }
 
 export default function AdminDashboardPage() {
-  // Example numbers (Tour Organizer model)
   const totalRevenue = 150_000_000;
   const busRentalCost = 70_000_000;
   const hotelRentalCost = 40_000_000;
   const vendorCost = busRentalCost + hotelRentalCost;
-  const operationalCost = 20_000_000; // tickets, catering, crew
+  const operationalCost = 20_000_000;
   const netProfit = totalRevenue - (vendorCost + operationalCost);
 
   return (
-    <div className="space-y-8">
-      <section>
-        <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 md:text-3xl">
-          Dashboard — Tour Organizer
-        </h1>
-        <p className="mt-2 text-sm leading-6 text-slate-600">
-          Model bisnis: sewa bus & hotel (vendor), operasional dikelola internal.
-        </p>
-      </section>
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      
+      {/* Header Section */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+           <h1 className="text-3xl font-black tracking-tighter text-slate-900">
+             DASHBOARD
+           </h1>
+           <p className="text-slate-500 font-medium">Pantau performa bisnis real-time.</p>
+        </div>
+        <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-slate-200 shadow-sm text-sm font-bold text-slate-600">
+            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"/>
+            Live Update
+        </div>
+      </div>
 
-      {/* Financial Overview */}
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-xs font-bold tracking-[0.2em] text-slate-500">TOTAL OMSET</p>
-              <p className="mt-2 text-2xl font-extrabold tracking-tight text-slate-900">
-                {formatIDR(totalRevenue)}
-              </p>
-              <p className="mt-1 text-xs text-slate-500">Total revenue dari klien</p>
+      {/* Stats Grid (Bento Style) */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Card 1: Omset */}
+        <div className="group relative overflow-hidden rounded-4xl bg-slate-900 p-6 shadow-xl transition hover:-translate-y-1">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-acid/10 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none group-hover:bg-acid/20 transition-colors" />
+          <div className="relative z-10">
+            <div className="flex justify-between items-start mb-4">
+               <div className="p-3 rounded-2xl bg-white/10 text-acid">
+                  <Wallet size={24} />
+               </div>
+               <span className="flex items-center gap-1 text-xs font-bold text-acid bg-acid/10 px-2 py-1 rounded-full">
+                  +12% <TrendingUp size={12} />
+               </span>
             </div>
-            <div className="grid h-11 w-11 place-items-center rounded-xl bg-ferrari/10">
-              <Wallet className="h-5 w-5 text-ferrari" />
-            </div>
+            <p className="text-white/60 text-sm font-bold uppercase tracking-widest">Total Omset</p>
+            <p className="text-2xl md:text-3xl font-black text-white mt-1">{formatIDR(totalRevenue)}</p>
           </div>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-xs font-bold tracking-[0.2em] text-slate-500">BIAYA VENDOR (SEWA)</p>
-              <p className="mt-2 text-2xl font-extrabold tracking-tight text-slate-900">
-                {formatIDR(vendorCost)}
-              </p>
-              <p className="mt-1 text-xs text-slate-500">Sewa bus + sewa hotel</p>
+        {/* Card 2: Vendor */}
+        <div className="group relative overflow-hidden rounded-4xl bg-white p-6 shadow-sm border border-slate-200 transition hover:-translate-y-1 hover:shadow-lg">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-ocean/10 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none" />
+           <div className="flex justify-between items-start mb-4">
+               <div className="p-3 rounded-2xl bg-ocean/10 text-ocean">
+                  <Building2 size={24} />
+               </div>
             </div>
-            <div className="grid h-11 w-11 place-items-center rounded-xl bg-slate-50">
-              <Building2 className="h-5 w-5 text-slate-700" />
-            </div>
-          </div>
+            <p className="text-slate-400 text-sm font-bold uppercase tracking-widest">Biaya Vendor</p>
+            <p className="text-2xl md:text-3xl font-black text-slate-900 mt-1">{formatIDR(vendorCost)}</p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-xs font-bold tracking-[0.2em] text-slate-500">BIAYA OPERASIONAL</p>
-              <p className="mt-2 text-2xl font-extrabold tracking-tight text-slate-900">
-                {formatIDR(operationalCost)}
-              </p>
-              <p className="mt-1 text-xs text-slate-500">Tiket, catering, crew</p>
+        {/* Card 3: Ops */}
+        <div className="group relative overflow-hidden rounded-4xl bg-white p-6 shadow-sm border border-slate-200 transition hover:-translate-y-1 hover:shadow-lg">
+           <div className="absolute top-0 right-0 w-32 h-32 bg-sun/10 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none" />
+           <div className="flex justify-between items-start mb-4">
+               <div className="p-3 rounded-2xl bg-sun/10 text-sun-600">
+                  <ReceiptText size={24} />
+               </div>
             </div>
-            <div className="grid h-11 w-11 place-items-center rounded-xl bg-slate-50">
-              <ReceiptText className="h-5 w-5 text-slate-700" />
-            </div>
-          </div>
+            <p className="text-slate-400 text-sm font-bold uppercase tracking-widest">Operasional</p>
+            <p className="text-2xl md:text-3xl font-black text-slate-900 mt-1">{formatIDR(operationalCost)}</p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-xs font-bold tracking-[0.2em] text-slate-500">LABA BERSIH</p>
-              <p className="mt-2 text-2xl font-extrabold tracking-tight text-slate-900">
-                {formatIDR(netProfit)}
-              </p>
-              <p className="mt-1 text-xs text-slate-600">Revenue - (Vendor + Ops)</p>
+        {/* Card 4: Profit */}
+        <div className="group relative overflow-hidden rounded-4xl bg-linear-to-br from-ferrari to-red-600 p-6 shadow-xl transition hover:-translate-y-1">
+           <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-overlay"></div>
+           <div className="relative z-10">
+            <div className="flex justify-between items-start mb-4">
+               <div className="p-3 rounded-2xl bg-white/20 text-white">
+                  <PieChart size={24} />
+               </div>
             </div>
-            <div className="grid h-11 w-11 place-items-center rounded-xl bg-white">
-              <PieChart className="h-5 w-5 text-ferrari" />
-            </div>
-          </div>
+            <p className="text-white/80 text-sm font-bold uppercase tracking-widest">Laba Bersih</p>
+            <p className="text-2xl md:text-3xl font-black text-white mt-1">{formatIDR(netProfit)}</p>
+           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Cost Breakdown (stacked bar) */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <h2 className="text-base font-extrabold tracking-tight text-slate-900">
-              Cost Breakdown
-            </h2>
-            <p className="mt-1 text-sm text-slate-600">
-              Visual alokasi omset (tanpa chart library)
-            </p>
-          </div>
-          <div className="text-xs font-semibold text-slate-500">
-            Basis: {formatIDR(totalRevenue)}
-          </div>
-        </div>
+      <div className="grid gap-6 lg:grid-cols-3">
+        {/* Cost Breakdown */}
+        <div className="lg:col-span-2 rounded-4xl bg-white p-8 border border-slate-200 shadow-sm">
+           <h3 className="text-lg font-black text-slate-900 mb-6">COST BREAKDOWN</h3>
+           
+           {/* Custom Stacked Bar */}
+           <div className="h-16 w-full rounded-2xl bg-slate-100 flex overflow-hidden mb-8 ring-4 ring-slate-50">
+             <div className="h-full w-[46%] bg-slate-800 flex items-center justify-center text-white text-xs font-bold">BUS</div>
+             <div className="h-full w-[27%] bg-ocean flex items-center justify-center text-white text-xs font-bold">HOTEL</div>
+             <div className="h-full w-[13%] bg-sun flex items-center justify-center text-slate-900 text-xs font-bold">OPS</div>
+             <div className="h-full w-[14%] bg-ferrari flex items-center justify-center text-white text-xs font-bold">$$$</div>
+           </div>
 
-        <div className="mt-5 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-          <div className="flex h-10 w-full">
-            <div
-              className="h-full w-[46.6667%] bg-ferrari"
-              title={`Sewa Bus: ${formatIDR(busRentalCost)}`}
-            />
-            <div
-              className="h-full w-[26.6667%] bg-ocean"
-              title={`Sewa Hotel: ${formatIDR(hotelRentalCost)}`}
-            />
-            <div
-              className="h-full w-[13.3333%] bg-sun"
-              title={`Operasional: ${formatIDR(operationalCost)}`}
-            />
-            <div
-              className="h-full w-[13.3333%] bg-leaf"
-              title={`Profit: ${formatIDR(netProfit)}`}
-            />
-          </div>
+           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+               {[
+                   { label: "Sewa Bus", val: busRentalCost, color: "bg-slate-800" },
+                   { label: "Sewa Hotel", val: hotelRentalCost, color: "bg-ocean" },
+                   { label: "Operasional", val: operationalCost, color: "bg-sun" },
+                   { label: "Net Profit", val: netProfit, color: "bg-ferrari" },
+               ].map((item) => (
+                   <div key={item.label} className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                       <div className={`w-3 h-3 rounded-full mb-2 ${item.color}`} />
+                       <p className="text-xs text-slate-500 font-bold uppercase">{item.label}</p>
+                       <p className="text-sm font-bold text-slate-900">{formatIDR(item.val)}</p>
+                   </div>
+               ))}
+           </div>
         </div>
 
-        <div className="mt-4 grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-4">
-          <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3">
-            <div className="flex items-center gap-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-ferrari" />
-              <span className="font-semibold text-slate-900">Sewa Bus</span>
+        {/* Quick Action / Mini List */}
+        <div className="rounded-4xl bg-white p-8 border border-slate-200 shadow-sm flex flex-col justify-center items-center text-center">
+            <div className="w-20 h-20 bg-acid/20 rounded-full flex items-center justify-center mb-4">
+                <ArrowUpRight className="w-10 h-10 text-acid-600" />
             </div>
-            <span className="text-slate-600">{formatIDR(busRentalCost)}</span>
-          </div>
-
-          <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3">
-            <div className="flex items-center gap-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-ocean" />
-              <span className="font-semibold text-slate-900">Sewa Hotel</span>
-            </div>
-            <span className="text-slate-600">{formatIDR(hotelRentalCost)}</span>
-          </div>
-
-          <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3">
-            <div className="flex items-center gap-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-sun" />
-              <span className="font-semibold text-slate-900">Operasional</span>
-            </div>
-            <span className="text-slate-600">{formatIDR(operationalCost)}</span>
-          </div>
-
-          <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3">
-            <div className="flex items-center gap-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-leaf" />
-              <span className="font-semibold text-slate-900">Profit</span>
-            </div>
-            <span className="text-slate-600">{formatIDR(netProfit)}</span>
-          </div>
+            <h3 className="text-xl font-black text-slate-900 mb-2">Buat Booking Baru</h3>
+            <p className="text-slate-500 text-sm mb-6">Input data manual untuk klien yang booking via WhatsApp.</p>
+            <button className="w-full py-4 rounded-xl bg-slate-900 text-white font-bold hover:bg-ferrari transition-colors">
+                + Tambah Booking
+            </button>
         </div>
-      </section>
+      </div>
 
-      {/* Vendor Status Table */}
-      <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <div className="border-b border-slate-200 px-6 py-4">
-          <h2 className="text-base font-extrabold tracking-tight text-slate-900">
-            Vendor Status (Pembayaran Mendatang)
-          </h2>
-          <p className="mt-1 text-sm text-slate-600">
-            Gabungan PO bus dan hotel untuk jadwal pembayaran upcoming
-          </p>
+      {/* Table Section */}
+      <div className="rounded-4xl bg-white border border-slate-200 shadow-sm overflow-hidden">
+        <div className="p-8 border-b border-slate-100 flex justify-between items-center">
+           <h3 className="text-lg font-black text-slate-900">UPCOMING PAYMENTS</h3>
+           <button className="text-sm font-bold text-ferrari hover:underline">Lihat Semua</button>
         </div>
-
         <div className="overflow-x-auto">
-          <table className="min-w-full text-left text-sm">
-            <thead className="bg-slate-50 text-xs font-bold tracking-[0.2em] text-slate-600">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-slate-50/50">
               <tr>
-                <th className="px-6 py-3">Vendor</th>
-                <th className="px-6 py-3">Nama</th>
-                <th className="px-6 py-3">Layanan</th>
-                <th className="px-6 py-3">Jatuh Tempo</th>
-                <th className="px-6 py-3">Nominal</th>
-                <th className="px-6 py-3">Status</th>
+                <th className="px-8 py-4 font-bold text-slate-500 uppercase text-xs tracking-wider">Vendor</th>
+                <th className="px-8 py-4 font-bold text-slate-500 uppercase text-xs tracking-wider">Keterangan</th>
+                <th className="px-8 py-4 font-bold text-slate-500 uppercase text-xs tracking-wider">Due Date</th>
+                <th className="px-8 py-4 font-bold text-slate-500 uppercase text-xs tracking-wider">Nominal</th>
+                <th className="px-8 py-4 font-bold text-slate-500 uppercase text-xs tracking-wider">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200">
+            <tbody className="divide-y divide-slate-100">
               {vendorPayments.map((row) => (
-                <tr
-                  key={`${row.vendorType}-${row.vendorName}-${row.dueDate}`}
-                  className="transition hover:bg-slate-50/70"
-                >
-                  <td className="px-6 py-4">
-                    <span className="inline-flex items-center rounded-full bg-slate-900/5 px-3 py-1 text-xs font-semibold text-slate-900 ring-1 ring-slate-900/10">
-                      {row.vendorType}
-                    </span>
+                <tr key={`${row.vendorType}-${row.vendorName}`} className="hover:bg-slate-50 transition-colors">
+                  <td className="px-8 py-4">
+                     <span className="font-bold text-slate-900 block">{row.vendorName}</span>
+                     <span className="text-xs text-slate-500">{row.vendorType}</span>
                   </td>
-                  <td className="px-6 py-4 font-semibold text-slate-900">{row.vendorName}</td>
-                  <td className="px-6 py-4 text-slate-700">{row.service}</td>
-                  <td className="px-6 py-4 text-slate-600">{row.dueDate}</td>
-                  <td className="px-6 py-4 font-semibold text-slate-900">
-                    {formatIDR(row.amount)}
-                  </td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${statusBadgeClass(
-                        row.status
-                      )}`}
-                    >
+                  <td className="px-8 py-4 text-slate-600 font-medium">{row.service}</td>
+                  <td className="px-8 py-4 text-slate-600 font-mono">{row.dueDate}</td>
+                  <td className="px-8 py-4 font-bold text-slate-900">{formatIDR(row.amount)}</td>
+                  <td className="px-8 py-4">
+                    <span className={`inline-flex items-center rounded-lg px-3 py-1 text-xs font-bold uppercase tracking-wide ${statusBadgeClass(row.status)}`}>
                       {row.status}
                     </span>
                   </td>
@@ -272,7 +226,7 @@ export default function AdminDashboardPage() {
             </tbody>
           </table>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

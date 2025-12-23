@@ -1,165 +1,128 @@
 "use client";
 
-import Link from "next/link";
-import { useMemo, useState, useTransition } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
+import { motion } from "framer-motion";
+import { KeyRound, Mail, ArrowRight, Loader2, AlertCircle } from "lucide-react";
 
-export default function LoginForm({
-  nextPath,
-  initialMessage,
-}: {
-  nextPath: string;
+type LoginFormProps = {
+  nextPath?: string;
   initialMessage?: string;
-}) {
+};
+
+export default function LoginForm({ nextPath = "/admin", initialMessage }: LoginFormProps) {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState<string | null>(initialMessage ?? null);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isPending, startTransition] = useTransition();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(initialMessage || "");
 
-  const safeNextPath = useMemo(() => {
-    return typeof nextPath === "string" && nextPath.startsWith("/") ? nextPath : "/admin";
-  }, [nextPath]);
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
-  const isDisabled = useMemo(() => {
-    return !email.trim() || !password.trim() || isPending;
-  }, [email, password, isPending]);
+    const supabase = createSupabaseBrowserClient();
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (signInError) {
+      setError(signInError.message);
+      setLoading(false);
+    } else {
+      router.refresh();
+      router.push(nextPath);
+    }
+  };
 
   return (
-    <div className="relative min-h-svh overflow-hidden bg-slate-950 text-white">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-24 -top-24 h-80 w-80 rounded-full bg-ferrari/35 blur-3xl" />
-        <div className="absolute -right-28 top-24 h-96 w-96 rounded-full bg-ocean/30 blur-3xl" />
-        <div className="absolute -bottom-24 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-sun/25 blur-3xl" />
-        <div className="absolute inset-0 bg-linear-to-b from-slate-950 via-slate-950/70 to-slate-950" />
+    <div className="relative min-h-svh flex items-center justify-center overflow-hidden bg-slate-900">
+      {/* Background Ambience */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 h-125 w-125 rounded-full bg-ferrari/30 blur-[100px] mix-blend-screen animate-blob" />
+        <div className="absolute bottom-0 right-1/4 h-125 w-125 rounded-full bg-acid/20 blur-[100px] mix-blend-screen animate-blob [animation-delay:2s]" />
       </div>
 
-      <div className="relative mx-auto grid min-h-svh max-w-6xl items-center px-6 py-14 lg:grid-cols-2 lg:gap-10">
-        <div className="hidden lg:block">
-          <p className="text-xs font-semibold tracking-[0.25em] text-white/70">FERRARI JAYA GROUP</p>
-          <h1 className="mt-4 text-balance text-4xl font-extrabold tracking-tight">
-            Admin Access
-            <span className="block bg-linear-to-r from-ferrari to-sun bg-clip-text text-transparent">
-              Fast. Focused. Secure.
-            </span>
-          </h1>
-          <p className="mt-5 max-w-xl text-sm leading-7 text-white/75">
-            Login untuk mengelola konten landing page dan dashboard internal.
-          </p>
-
-          <div className="mt-8 grid max-w-xl gap-3">
-            <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-              <p className="text-sm font-semibold text-white/90">Catatan</p>
-              <p className="mt-1 text-sm text-white/70">
-                Tidak ada redirect otomatis. Setelah berhasil login, klik tombol untuk masuk.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mx-auto w-full max-w-md">
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-7 shadow-sm backdrop-blur">
-            <div className="text-center">
-              <div className="text-lg font-extrabold tracking-tight">
-                <span className="bg-linear-to-r from-ferrari to-sun bg-clip-text text-transparent">
-                  Ferrari Jaya
-                </span>
-                <span className="ml-2 text-white/85">Login</span>
-              </div>
-              <p className="mt-3 text-sm leading-7 text-white/70">Masuk untuk lanjut.</p>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="relative z-10 w-full max-w-md p-6"
+      >
+        <div className="overflow-hidden rounded-3xl bg-white/10 border border-white/20 backdrop-blur-xl shadow-2xl">
+          <div className="p-8">
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-black tracking-tighter text-white mb-2">
+                WELCOME <span className="text-acid">BACK!</span>
+              </h1>
+              <p className="text-white/60 text-sm">Masuk ke panel kendali Ferrari Tour.</p>
             </div>
 
-            <form
-              className="mt-7 grid gap-4"
-              onSubmit={(e) => {
-                e.preventDefault();
-                setMessage(null);
-                setIsSuccess(false);
-
-                startTransition(async () => {
-                  try {
-                    const supabase = createSupabaseBrowserClient();
-                    const { error } = await supabase.auth.signInWithPassword({
-                      email: email.trim(),
-                      password,
-                    });
-                    if (error) {
-                      setMessage(error.message);
-                      return;
-                    }
-
-                    setIsSuccess(true);
-                    setMessage("Login berhasil.");
-
-                    // Refresh to update any server-rendered auth state.
-                    router.refresh();
-                  } catch (err) {
-                    setMessage(err instanceof Error ? err.message : "Login gagal.");
-                  }
-                });
-              }}
-            >
-              <div className="grid gap-2">
-                <label htmlFor="login-email" className="text-sm font-semibold text-white/85">
-                  Email
-                </label>
-                <input
-                  id="login-email"
-                  type="email"
-                  autoComplete="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="h-11 w-full rounded-2xl border border-white/10 bg-white/5 px-4 text-sm text-white outline-none placeholder:text-white/40 focus:border-ocean"
-                  placeholder="admin@domain.com"
-                />
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-xs font-bold uppercase tracking-widest text-white/70 ml-1">Email</label>
+                <div className="relative group">
+                  <Mail className="absolute left-4 top-3.5 h-5 w-5 text-white/50 group-focus-within:text-acid transition-colors" />
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="admin@ferrari.com"
+                    className="w-full rounded-xl bg-white/5 border border-white/10 py-3 pl-12 pr-4 text-white placeholder:text-white/20 focus:border-acid focus:bg-white/10 focus:outline-none focus:ring-1 focus:ring-acid transition-all"
+                  />
+                </div>
               </div>
 
-              <div className="grid gap-2">
-                <label htmlFor="login-password" className="text-sm font-semibold text-white/85">
-                  Password
-                </label>
-                <input
-                  id="login-password"
-                  type="password"
-                  autoComplete="current-password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="h-11 w-full rounded-2xl border border-white/10 bg-white/5 px-4 text-sm text-white outline-none placeholder:text-white/40 focus:border-ocean"
-                  placeholder="••••••••"
-                />
+              <div className="space-y-2">
+                <label className="text-xs font-bold uppercase tracking-widest text-white/70 ml-1">Password</label>
+                <div className="relative group">
+                  <KeyRound className="absolute left-4 top-3.5 h-5 w-5 text-white/50 group-focus-within:text-acid transition-colors" />
+                  <input
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full rounded-xl bg-white/5 border border-white/10 py-3 pl-12 pr-4 text-white placeholder:text-white/20 focus:border-acid focus:bg-white/10 focus:outline-none focus:ring-1 focus:ring-acid transition-all"
+                  />
+                </div>
               </div>
+
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-2 rounded-xl bg-red-500/20 border border-red-500/50 p-3 text-sm text-red-200"
+                >
+                  <AlertCircle className="h-4 w-4 shrink-0" />
+                  {error}
+                </motion.div>
+              )}
 
               <button
                 type="submit"
-                disabled={isDisabled}
-                className={
-                  "mt-2 inline-flex h-11 items-center justify-center rounded-2xl px-5 text-sm font-semibold transition " +
-                  (isDisabled
-                    ? "cursor-not-allowed bg-white/10 text-white/50"
-                    : "bg-ferrari text-white hover:opacity-95")
-                }
+                disabled={loading}
+                className="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-white py-3.5 text-sm font-bold text-slate-900 transition-all hover:bg-acid hover:scale-[1.02] disabled:opacity-70 disabled:hover:scale-100 mt-6"
               >
-                {isPending ? "Masuk…" : "Masuk"}
+                {loading ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <>
+                    <span>{"Let's Go"}</span>
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </>
+                )}
               </button>
-
-              {isSuccess && (
-                <Link
-                  href={safeNextPath}
-                  className="inline-flex h-11 items-center justify-center rounded-2xl bg-white px-5 text-sm font-semibold text-slate-900 transition hover:bg-white/90"
-                >
-                  Lanjut ke Admin
-                </Link>
-              )}
-
-              {message && <p className="text-sm font-semibold text-white/80">{message}</p>}
             </form>
           </div>
-
-          <p className="mt-6 text-center text-xs text-white/50">© {new Date().getFullYear()} Ferrari Jaya Group</p>
+          
+          {/* Bottom Decor */}
+          <div className="h-2 w-full bg-linear-to-r from-ferrari via-acid to-purple" />
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

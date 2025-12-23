@@ -38,7 +38,7 @@ export default function Testimonials({ content }: { content?: TestimonialsConten
             <motion.div
               key={t.name}
               whileHover={{ y: -8 }}
-              className="relative flex flex-col justify-between rounded-[2rem] bg-slate-50 p-8 transition-all hover:bg-white hover:shadow-xl border border-transparent hover:border-slate-100"
+              className="relative flex flex-col justify-between rounded-4xl bg-slate-50 p-8 transition-all hover:bg-white hover:shadow-xl border border-transparent hover:border-slate-100"
             >
               <Quote className={`absolute top-8 right-8 h-12 w-12 opacity-10 ${t.accent.replace('fill-', 'text-')}`} />
               

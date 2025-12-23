@@ -21,7 +21,7 @@ export default function Footer({ content }: { content?: FooterContent }) {
   const contact = content?.contact;
 
   return (
-    <footer id="kontak" className="bg-black text-white pt-24 pb-12 rounded-t-[3rem] mt-[-3rem] relative z-20">
+    <footer id="kontak" className="bg-black text-white pt-24 pb-12 rounded-t-[3rem] -mt-12 relative z-20">
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4 mb-16">
           {/* Brand */}
