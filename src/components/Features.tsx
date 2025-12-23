@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Bus, GraduationCap, Wallet } from "lucide-react";
+import { Bus, GraduationCap, Wallet, Star, Zap, ShieldCheck } from "lucide-react";
 
 type FeatureItem = {
   title: string;
@@ -25,41 +25,55 @@ const ICONS = {
 } as const;
 
 export default function Features({ content }: { content?: FeaturesContent }) {
+  // Fallback icons mapping for styling
+  const STYLE_MAP = [
+    { border: "hover:border-acid", shadow: "hover:shadow-acid/30", iconColor: "text-acid" },
+    { border: "hover:border-purple", shadow: "hover:shadow-purple/30", iconColor: "text-purple" },
+    { border: "hover:border-ferrari", shadow: "hover:shadow-ferrari/30", iconColor: "text-ferrari" },
+  ];
+
   return (
-    <section id="tentang" className="bg-white scroll-mt-24">
-      <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
-        <div className="max-w-2xl">
-          <p className="text-xs font-semibold tracking-[0.25em] text-slate-500">
-            {content?.eyebrow ?? "FEATURES"}
-          </p>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            {content?.title ?? "Kenapa Ferrari Jaya Group"}
+    <section id="tentang" className="bg-slate-50 relative py-20 scroll-mt-24 overflow-hidden">
+      {/* Background blobs */}
+      <div className="absolute top-20 right-0 w-96 h-96 bg-acid/10 rounded-full blur-3xl mix-blend-multiply pointer-events-none" />
+      <div className="absolute bottom-20 left-0 w-96 h-96 bg-purple/10 rounded-full blur-3xl mix-blend-multiply pointer-events-none" />
+
+      <div className="mx-auto max-w-6xl px-6 relative z-10">
+        <div className="max-w-3xl mb-12">
+          <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slate-900 mb-4">
+            KENAPA HARUS <span className="text-transparent bg-clip-text bg-gradient-to-r from-ferrari to-purple">FERRARI?</span>
           </h2>
-          <p className="mt-4 text-base leading-7 text-slate-600">
-            {content?.subtitle ?? "Desain layanan yang rapi, terasa cepat, dan tetap fun."}
+          <p className="text-lg text-slate-600 font-medium leading-relaxed">
+            {content?.subtitle ?? "Bukan travel biasa. Kita bikin standar baru buat trip sekolah yang anti-boring, aman, dan pastinya aesthetic buat story IG."}
           </p>
         </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {(content?.items ?? []).map(({ title, description, icon, colorClass, bgClass }) => {
-            const Icon = ICONS[icon] ?? GraduationCap;
+        <div className="grid gap-6 md:grid-cols-3">
+          {(content?.items ?? []).map(({ title, description, icon }, idx) => {
+            const Icon = ICONS[icon] ?? Star;
+            const style = STYLE_MAP[idx % STYLE_MAP.length];
+            
             return (
-            <motion.article
-              key={title}
-              whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.18, ease: [0.2, 0.8, 0.2, 1] }}
-              className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5"
-            >
-              <div className="flex items-center gap-4">
-                <div className={"grid h-12 w-12 place-items-center rounded-2xl " + bgClass}>
-                  <Icon className={"h-6 w-6 " + colorClass} />
+              <motion.div
+                key={title}
+                whileHover={{ y: -8, scale: 1.02 }}
+                className={`group relative overflow-hidden rounded-[2rem] bg-white p-8 shadow-sm border border-slate-100 transition-all duration-300 ${style.border} ${style.shadow} hover:shadow-xl`}
+              >
+                <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-slate-50 transition-colors group-hover:bg-slate-100" />
+                
+                <div className="relative">
+                  <div className={`mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-white shadow-lg transition-transform group-hover:rotate-12`}>
+                    <Icon className={`h-7 w-7 ${style.iconColor}`} />
+                  </div>
+                  
+                  <h3 className="text-2xl font-black tracking-tight text-slate-900 mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-slate-900 group-hover:to-slate-600">
+                    {title}
+                  </h3>
+                  <p className="text-base font-medium leading-relaxed text-slate-500">
+                    {description}
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold tracking-tight text-slate-900">
-                  {title}
-                </h3>
-              </div>
-              <p className="mt-4 text-sm leading-7 text-slate-600">{description}</p>
-            </motion.article>
+              </motion.div>
             );
           })}
         </div>

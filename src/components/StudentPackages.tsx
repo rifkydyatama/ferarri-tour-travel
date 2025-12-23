@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 
 type StudentPackagesContent = {
   eyebrow: string;
@@ -20,68 +21,68 @@ export default function StudentPackages({ content }: { content?: StudentPackages
   const items = content?.items ?? [];
 
   return (
-    <section id="paket-pelajar" className="bg-white scroll-mt-24">
-      <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
-        <div className="flex flex-col gap-3">
-          <p className="text-xs font-semibold tracking-[0.25em] text-slate-500">
-            {content?.eyebrow ?? "STUDY TOUR"}
-          </p>
-          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            {content?.title ?? "Paket Pelajar & Rombongan"}
-          </h2>
-          <p className="max-w-2xl text-base leading-7 text-slate-600">
-            {content?.subtitle ??
-              "Fokus untuk sekolah: Study Tour, Kunjungan Industri SMK, dan Wisata Umum."}
-          </p>
+    <section id="paket-pelajar" className="bg-white py-24 scroll-mt-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+          <div className="max-w-2xl">
+            <span className="font-mono text-acid font-bold tracking-widest uppercase mb-2 block">Let's Go!</span>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slate-900">
+              PILIH PETUALANGANMU
+            </h2>
+          </div>
+          <Link 
+            href={content?.consultHref ?? "#"}
+            className="hidden md:inline-flex items-center gap-2 font-bold text-slate-900 border-b-2 border-acid pb-1 hover:text-ferrari hover:border-ferrari transition-colors"
+          >
+            Custom Paket Sendiri <ArrowUpRight className="w-4 h-4" />
+          </Link>
         </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {items.map((pkg) => (
-            <motion.article
+        <div className="grid gap-8 md:grid-cols-3">
+          {items.map((pkg, i) => (
+            <motion.div
               key={pkg.slug}
-              whileHover={{ y: -6 }}
-              transition={{ duration: 0.18, ease: [0.2, 0.8, 0.2, 1] }}
-              className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              viewport={{ once: true }}
+              className="group relative flex flex-col justify-between rounded-[2.5rem] bg-slate-50 p-2 transition-all hover:bg-black hover:shadow-2xl hover:shadow-ferrari/20"
             >
-              <div className="flex flex-wrap items-center gap-2">
-                {pkg.badges.map((b) => (
-                  <span
-                    key={b.label}
-                    className={
-                      "inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold " +
-                      b.className
-                    }
+              <div className="rounded-[2rem] bg-white p-6 h-full border border-slate-100 group-hover:border-transparent transition-colors">
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {pkg.badges.map((b) => (
+                    <span
+                      key={b.label}
+                      className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-slate-600 group-hover:bg-ferrari/10 group-hover:text-ferrari"
+                    >
+                      {b.label}
+                    </span>
+                  ))}
+                </div>
+
+                <h3 className="mb-2 text-2xl font-black tracking-tight text-slate-900 group-hover:text-ferrari transition-colors">
+                  {pkg.title}
+                </h3>
+                <p className="text-sm font-medium leading-relaxed text-slate-500 mb-8">
+                  {pkg.subtitle}
+                </p>
+
+                <div className="mt-auto grid grid-cols-2 gap-3">
+                  <Link
+                    href={`/paket/${pkg.slug}`}
+                    className="flex items-center justify-center rounded-xl bg-slate-100 py-3 text-sm font-bold text-slate-900 transition hover:bg-slate-200"
                   >
-                    {b.label}
-                  </span>
-                ))}
+                    Detail
+                  </Link>
+                  <Link
+                    href={content?.consultHref ?? "https://wa.me/"}
+                    className="flex items-center justify-center rounded-xl bg-ferrari py-3 text-sm font-bold text-white transition hover:bg-red-600 shadow-lg shadow-ferrari/20"
+                  >
+                    Gas Booking
+                  </Link>
+                </div>
               </div>
-
-              <h3 className="mt-4 text-lg font-extrabold tracking-tight text-slate-900">
-                {pkg.title}
-              </h3>
-              <p className="mt-2 text-sm leading-7 text-slate-600">
-                {pkg.subtitle}
-              </p>
-
-              <div className="mt-6 flex items-center gap-3">
-                <Link
-                  href={content?.consultHref ?? "https://wa.me/"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-2xl bg-ferrari px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-95"
-                >
-                  Konsultasi
-                </Link>
-
-                <Link
-                  href={`/paket/${pkg.slug}`}
-                  className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 transition hover:border-ocean"
-                >
-                  Detail
-                </Link>
-              </div>
-            </motion.article>
+            </motion.div>
           ))}
         </div>
       </div>

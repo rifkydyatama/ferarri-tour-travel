@@ -13,56 +13,50 @@ export default function HowItWorks({ content }: { content?: HowItWorksContent })
   const steps = content?.steps ?? [];
 
   return (
-    <section className="bg-white">
-      <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
-        <div className="max-w-2xl">
-          <p className="text-xs font-semibold tracking-[0.25em] text-slate-500">
-            {content?.eyebrow ?? "PROCESS"}
-          </p>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            {content?.title ?? "Alur Pemesanan Mudah"}
+    <section className="bg-slate-900 text-white py-24 relative overflow-hidden">
+      {/* Abstract Background */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-20 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-acid rounded-full blur-[128px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-ferrari rounded-full blur-[128px]" />
+      </div>
+
+      <div className="mx-auto max-w-6xl px-6 relative z-10">
+        <div className="text-center mb-16">
+          <span className="text-acid font-mono text-sm font-bold tracking-widest uppercase">EASY PROCESS</span>
+          <h2 className="mt-3 text-3xl md:text-5xl font-black tracking-tighter">
+            CARA KERJA KAMI
           </h2>
-          <p className="mt-4 text-base leading-7 text-slate-600">
-            {content?.subtitle ??
-              "Dari konsultasi sampai berangkat — jelas, cepat, dan enak untuk panitia sekolah."}
-          </p>
         </div>
 
-        <div className="mt-10 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 sm:p-8">
-          <div className="relative">
-            <div className="pointer-events-none absolute left-6 right-6 top-6 hidden h-0.5 bg-slate-200 md:block" />
+        <div className="grid gap-12 md:grid-cols-4 relative">
+          {/* Connecting Line (Desktop) */}
+          <div className="hidden md:block absolute top-12 left-0 w-full h-1 bg-white/10 rounded-full" />
 
-            <div className="grid gap-6 md:grid-cols-4">
-              {steps.map((step, index) => (
-                <motion.div
-                  key={step.title}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1], delay: index * 0.05 }}
-                  className="relative"
-                >
-                  <div className="flex items-start gap-4 md:flex-col md:items-start">
-                    <div className="relative">
-                      <div className={"grid h-12 w-12 place-items-center rounded-full text-sm font-extrabold text-white " + step.dotClass}>
-                        {index + 1}
-                      </div>
-                      <div className="absolute inset-0 rounded-full ring-4 ring-white/70" />
-                    </div>
+          {steps.map((step, index) => (
+            <motion.div
+              key={step.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.2 }}
+              className="relative flex flex-col items-center text-center md:items-start md:text-left"
+            >
+              {/* Number Blob */}
+              <div className="relative mb-6">
+                <div className="absolute inset-0 bg-acid blur-xl opacity-20 animate-pulse" />
+                <div className="relative z-10 flex h-24 w-24 items-center justify-center rounded-3xl bg-white/10 border border-white/20 backdrop-blur-md shadow-xl text-4xl font-black text-white transform rotate-3 transition-transform hover:rotate-0">
+                  {index + 1}
+                </div>
+              </div>
 
-                    <div>
-                      <h3 className="text-base font-extrabold tracking-tight text-slate-900">
-                        {step.title}
-                      </h3>
-                      <p className="mt-1 text-sm leading-7 text-slate-600">
-                        {step.description}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+              <h3 className="text-xl font-bold text-white mb-3">
+                {step.title}
+              </h3>
+              <p className="text-sm leading-relaxed text-slate-400">
+                {step.description}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
