@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import {
   BadgeCheck,
   CalendarDays,
@@ -152,10 +153,12 @@ export default async function PackageDetailPage({
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
-          <img
+          <Image
             src={pkg.heroImage}
             alt={pkg.title}
-            className="h-full w-full object-cover"
+            fill
+            priority
+            className="object-cover"
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-linear-to-t from-slate-950/75 via-slate-950/25 to-slate-950/10" />

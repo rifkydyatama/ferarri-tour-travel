@@ -2,40 +2,29 @@
 
 import { motion } from "framer-motion";
 
-const STEPS = [
-  {
-    title: "Konsultasi",
-    description: "Chat kebutuhan.",
-    dotClass: "bg-ocean",
-  },
-  {
-    title: "Penawaran",
-    description: "Kami kirim proposal.",
-    dotClass: "bg-ferrari",
-  },
-  {
-    title: "Survey",
-    description: "Cek unit bus.",
-    dotClass: "bg-sun",
-  },
-  {
-    title: "Deal & Berangkat",
-    description: "Fix jadwal, berangkat!",
-    dotClass: "bg-leaf",
-  },
-] as const;
+type HowItWorksContent = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  steps: Array<{ title: string; description: string; dotClass: string }>;
+};
 
-export default function HowItWorks() {
+export default function HowItWorks({ content }: { content?: HowItWorksContent }) {
+  const steps = content?.steps ?? [];
+
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         <div className="max-w-2xl">
-          <p className="text-xs font-semibold tracking-[0.25em] text-slate-500">PROCESS</p>
+          <p className="text-xs font-semibold tracking-[0.25em] text-slate-500">
+            {content?.eyebrow ?? "PROCESS"}
+          </p>
           <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            Alur Pemesanan Mudah
+            {content?.title ?? "Alur Pemesanan Mudah"}
           </h2>
           <p className="mt-4 text-base leading-7 text-slate-600">
-            Dari konsultasi sampai berangkat — jelas, cepat, dan enak untuk panitia sekolah.
+            {content?.subtitle ??
+              "Dari konsultasi sampai berangkat — jelas, cepat, dan enak untuk panitia sekolah."}
           </p>
         </div>
 
@@ -44,7 +33,7 @@ export default function HowItWorks() {
             <div className="pointer-events-none absolute left-6 right-6 top-6 hidden h-0.5 bg-slate-200 md:block" />
 
             <div className="grid gap-6 md:grid-cols-4">
-              {STEPS.map((step, index) => (
+              {steps.map((step, index) => (
                 <motion.div
                   key={step.title}
                   initial={{ opacity: 0, y: 10 }}

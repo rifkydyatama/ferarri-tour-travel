@@ -11,32 +11,12 @@ type Testimonial = {
   accentBg: string;
 };
 
-const TESTIMONIALS: Testimonial[] = [
-  {
-    name: "Budi Santoso",
-    role: "Guru Kesiswaan",
-    quote:
-      "Koordinasinya enak, itinerary rapi, dan anak-anak happy. Panitia sekolah jadi lebih tenang.",
-    accent: "text-ocean",
-    accentBg: "bg-ocean/10",
-  },
-  {
-    name: "Siti Rahma",
-    role: "Wakasek Kesiswaan",
-    quote:
-      "Harga ramah pelajar tapi tetap premium. Bus nyaman dan timnya sigap saat di lapangan.",
-    accent: "text-ferrari",
-    accentBg: "bg-ferrari/10",
-  },
-  {
-    name: "Agus Pranoto",
-    role: "Pembina OSIS",
-    quote:
-      "Kunjungan industri untuk SMK berjalan lancar. Dokumentasi dan rundown-nya detail.",
-    accent: "text-sun",
-    accentBg: "bg-sun/20",
-  },
-];
+type TestimonialsContent = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  items: Testimonial[];
+};
 
 function InitialAvatar({ name, accentBg }: { name: string; accentBg: string }) {
   const initials = name
@@ -52,24 +32,27 @@ function InitialAvatar({ name, accentBg }: { name: string; accentBg: string }) {
   );
 }
 
-export default function Testimonials() {
+export default function Testimonials({ content }: { content?: TestimonialsContent }) {
+  const items = content?.items ?? [];
+
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         <div className="max-w-2xl">
           <p className="text-xs font-semibold tracking-[0.25em] text-slate-500">
-            REVIEWS
+            {content?.eyebrow ?? "REVIEWS"}
           </p>
           <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            Kata Mereka
+            {content?.title ?? "Kata Mereka"}
           </h2>
           <p className="mt-4 text-base leading-7 text-slate-600">
-            Cerita singkat dari guru dan pembina yang sudah berangkat bersama.
+            {content?.subtitle ??
+              "Cerita singkat dari guru dan pembina yang sudah berangkat bersama."}
           </p>
         </div>
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {TESTIMONIALS.map((t) => (
+          {items.map((t) => (
             <motion.article
               key={t.name}
               whileHover={{ y: -6 }}

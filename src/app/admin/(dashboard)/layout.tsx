@@ -1,18 +1,26 @@
 import Link from "next/link";
+import LoginForm from "@/components/auth/LoginForm";
+import { requireAdminUser } from "@/lib/supabase/server";
 import {
   BookOpenCheck,
   BusFront,
   ChartNoAxesCombined,
   CreditCard,
+  FileText,
   LayoutDashboard,
   LogOut,
 } from "lucide-react";
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const auth = await requireAdminUser();
+  if (!auth.ok) {
+    return <LoginForm nextPath="/admin" initialMessage={auth.message} />;
+  }
+
   return (
     <div className="min-h-svh bg-gray-50 text-slate-900">
       <aside className="fixed inset-y-0 left-0 w-64 bg-slate-900 text-white">
@@ -40,23 +48,33 @@ export default function AdminLayout({
               </Link>
 
               <Link
-                href="#"
+                href="/admin/konten"
                 className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold text-white/80 transition hover:bg-white/10 hover:text-white"
+              >
+                <FileText className="h-4 w-4 text-plum" />
+                Konten Landing
+              </Link>
+
+              <button
+                type="button"
+                disabled
+                className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold text-white/50"
               >
                 <BookOpenCheck className="h-4 w-4 text-sun" />
                 Booking Masuk
-              </Link>
+              </button>
 
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold text-white/80 transition hover:bg-white/10 hover:text-white"
+              <button
+                type="button"
+                disabled
+                className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold text-white/50"
               >
                 <BusFront className="h-4 w-4 text-leaf" />
                 Manajemen Armada
-              </Link>
+              </button>
 
               <Link
-                href="#"
+                href="/admin/keuangan"
                 className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold text-white/80 transition hover:bg-white/10 hover:text-white"
               >
                 <CreditCard className="h-4 w-4 text-ferrari" />
@@ -64,7 +82,7 @@ export default function AdminLayout({
               </Link>
 
               <Link
-                href="#"
+                href="/admin/logout"
                 className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold text-white/80 transition hover:bg-white/10 hover:text-white"
               >
                 <LogOut className="h-4 w-4 text-white/70" />
@@ -119,3 +137,4 @@ export default function AdminLayout({
     </div>
   );
 }
+

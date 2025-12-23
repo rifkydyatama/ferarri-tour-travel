@@ -82,10 +82,9 @@ function TabButton({
       className={
         "inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold transition " +
         (active
-          ? "bg-[var(--color-ferrari)] text-white"
+          ? "bg-ferrari text-white"
           : "bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50")
       }
-      aria-pressed={active}
     >
       {label}
     </button>
@@ -134,10 +133,7 @@ export default function FinancialReportPage() {
     []
   );
 
-  const totalAP = useMemo(
-    () => invoices.reduce((sum, inv) => sum + inv.amount, 0),
-    []
-  );
+  const totalAP = useMemo(() => invoices.reduce((sum, inv) => sum + inv.amount, 0), []);
 
   return (
     <div className="space-y-8">
@@ -155,7 +151,7 @@ export default function FinancialReportPage() {
           </div>
 
           <div className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200">
-            <CalendarDays className="h-4 w-4 text-[var(--color-ferrari)]" />
+            <CalendarDays className="h-4 w-4 text-ferrari" />
             Periode: Bulan berjalan
           </div>
         </div>
@@ -185,7 +181,7 @@ export default function FinancialReportPage() {
             <div className="flex items-center justify-between gap-4 border-b border-slate-200 px-6 py-4">
               <div className="flex items-center gap-3">
                 <div className="grid h-10 w-10 place-items-center rounded-xl bg-slate-50">
-                  <FileText className="h-5 w-5 text-[var(--color-ferrari)]" />
+                  <FileText className="h-5 w-5 text-ferrari" />
                 </div>
                 <div>
                   <h2 className="text-base font-extrabold tracking-tight text-slate-900">
@@ -210,8 +206,8 @@ export default function FinancialReportPage() {
                     </p>
                     <p className="mt-1 text-xs text-slate-500">Total omset dari klien</p>
                   </div>
-                  <div className="grid h-11 w-11 place-items-center rounded-xl bg-[var(--color-ferrari)]/10">
-                    <Wallet className="h-5 w-5 text-[var(--color-ferrari)]" />
+                  <div className="grid h-11 w-11 place-items-center rounded-xl bg-ferrari/10">
+                    <Wallet className="h-5 w-5 text-ferrari" />
                   </div>
                 </div>
               </div>
@@ -220,7 +216,7 @@ export default function FinancialReportPage() {
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <p className="text-xs font-bold tracking-[0.2em] text-slate-500">VENDOR COST (COGS)</p>
-                    <p className="mt-2 text-2xl font-extrabold tracking-tight text-[var(--color-ferrari)]">
+                    <p className="mt-2 text-2xl font-extrabold tracking-tight text-ferrari">
                       {formatIDR(vendorCost)}
                     </p>
                     <p className="mt-1 text-xs text-slate-500">Sewa bus + sewa hotel</p>
@@ -269,25 +265,26 @@ export default function FinancialReportPage() {
                 <h3 className="text-base font-extrabold tracking-tight text-slate-900">
                   Rincian Pengeluaran
                 </h3>
-                <p className="mt-1 text-sm text-slate-600">
-                  Daftar teks (tanpa chart library)
-                </p>
+                <p className="mt-1 text-sm text-slate-600">Daftar teks (tanpa chart library)</p>
               </div>
               <div className="inline-flex items-center gap-2 rounded-full bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700">
-                <ReceiptText className="h-4 w-4 text-[var(--color-ferrari)]" />
+                <ReceiptText className="h-4 w-4 text-ferrari" />
                 Total: {formatIDR(vendorCost + operationalExpenses)}
               </div>
             </div>
 
             <ul className="mt-5 divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white">
               {expenseBreakdown.map((item) => (
-                <li key={item.name} className="flex items-center justify-between gap-4 px-5 py-4">
+                <li
+                  key={item.name}
+                  className="flex items-center justify-between gap-4 px-5 py-4"
+                >
                   <div>
                     <p className="font-semibold text-slate-900">{item.name}</p>
                     <p className="mt-1 text-xs text-slate-500">Expense</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-extrabold text-[var(--color-ferrari)]">
+                    <p className="font-extrabold text-ferrari">
                       {formatIDR(item.amount)}
                     </p>
                     <p className="mt-1 text-xs text-slate-500">Outflow</p>
@@ -317,12 +314,10 @@ export default function FinancialReportPage() {
               <h2 className="text-base font-extrabold tracking-tight text-slate-900">
                 Arus Kas (Cashflow)
               </h2>
-              <p className="mt-1 text-sm text-slate-600">
-                Placeholder ringkas untuk alur kas masuk/keluar.
-              </p>
+              <p className="mt-1 text-sm text-slate-600">Placeholder ringkas untuk alur kas masuk/keluar.</p>
             </div>
             <div className="grid h-10 w-10 place-items-center rounded-xl bg-slate-50">
-              <Banknote className="h-5 w-5 text-[var(--color-ferrari)]" />
+              <Banknote className="h-5 w-5 text-ferrari" />
             </div>
           </div>
 
@@ -337,7 +332,7 @@ export default function FinancialReportPage() {
 
             <div className="rounded-2xl border border-slate-200 bg-white p-5">
               <p className="text-xs font-bold tracking-[0.2em] text-slate-500">CASH OUT</p>
-              <p className="mt-2 text-2xl font-extrabold tracking-tight text-[var(--color-ferrari)]">
+              <p className="mt-2 text-2xl font-extrabold tracking-tight text-ferrari">
                 {formatIDR(95_000_000)}
               </p>
               <p className="mt-1 text-xs text-slate-500">Vendor + operasional</p>
@@ -372,7 +367,7 @@ export default function FinancialReportPage() {
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 px-6 py-4">
             <div className="flex items-center gap-3">
               <div className="grid h-10 w-10 place-items-center rounded-xl bg-slate-50">
-                <HandCoins className="h-5 w-5 text-[var(--color-ferrari)]" />
+                <HandCoins className="h-5 w-5 text-ferrari" />
               </div>
               <div>
                 <h2 className="text-base font-extrabold tracking-tight text-slate-900">
@@ -383,7 +378,7 @@ export default function FinancialReportPage() {
             </div>
 
             <div className="inline-flex items-center gap-2 rounded-full bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700">
-              <CreditCard className="h-4 w-4 text-[var(--color-ferrari)]" />
+              <CreditCard className="h-4 w-4 text-ferrari" />
               Total AP: {formatIDR(totalAP)}
             </div>
           </div>
@@ -408,13 +403,13 @@ export default function FinancialReportPage() {
                     <td className="px-6 py-4 font-semibold text-slate-900">{inv.vendorName}</td>
                     <td className="px-6 py-4 text-slate-700">{inv.projectRef}</td>
                     <td className="px-6 py-4 text-slate-600">{inv.dueDate}</td>
-                    <td className="px-6 py-4 font-extrabold text-[var(--color-ferrari)]">
+                    <td className="px-6 py-4 font-extrabold text-ferrari">
                       {formatIDR(inv.amount)}
                     </td>
                     <td className="px-6 py-4">
                       <button
                         type="button"
-                        className="inline-flex items-center justify-center rounded-xl bg-[var(--color-ferrari)] px-4 py-2 text-xs font-semibold text-white transition hover:opacity-95"
+                        className="inline-flex items-center justify-center rounded-xl bg-ferrari px-4 py-2 text-xs font-semibold text-white transition hover:opacity-95"
                       >
                         Pay Now
                       </button>

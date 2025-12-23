@@ -10,22 +10,25 @@ import Testimonials from "@/components/Testimonials";
 import CallToAction from "@/components/CallToAction";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
+import { getHomeContent } from "@/lib/landing/getHomeContent";
 
-export default function Home() {
+export default async function Home() {
+  const content = await getHomeContent();
+
   return (
     <div className="min-h-svh bg-white text-slate-900">
-      <Navbar />
-      <Hero />
-      <TrustedBy />
-      <Features />
-      <StudentPackages />
-      <HowItWorks />
-      <Destinations />
-      <Gallery />
-      <Testimonials />
-      <CallToAction />
-      <FAQ />
-      <Footer />
+      <Navbar content={content.navbar} />
+      <Hero content={content.hero} />
+      <TrustedBy content={content.trustedBy} />
+      <Features content={content.features} />
+      <StudentPackages content={content.packages} />
+      <HowItWorks content={content.howItWorks} />
+      <Destinations content={content.destinations} />
+      <Gallery content={content.gallery} />
+      <Testimonials content={content.testimonials} />
+      <CallToAction content={content.cta} />
+      <FAQ content={content.faq} />
+      <Footer content={content.footer} />
     </div>
   );
 }

@@ -29,7 +29,7 @@ function SeatButton({
   const isDisabled = status === "booked";
 
   const base =
-    "group relative flex w-full items-center justify-center gap-2 rounded-2xl border px-3 py-3 text-sm font-semibold transition";
+    "group relative flex w-full items-center justify-center gap-2 rounded-2xl border px-2 py-2 text-xs font-semibold transition sm:px-3 sm:py-3 sm:text-sm";
 
   const styles: Record<SeatStatus, string> = {
     available: "bg-white border-slate-200 hover:border-ocean hover:shadow-sm",
@@ -49,8 +49,6 @@ function SeatButton({
       disabled={isDisabled}
       onClick={onClick}
       className={base + " " + styles[status]}
-      aria-pressed={status === "selected"}
-      aria-disabled={isDisabled}
     >
       <Armchair className={"h-4 w-4 " + iconStyles[status]} />
       <span className={status === "selected" ? "text-white" : "text-inherit"}>
@@ -89,7 +87,7 @@ export default function BusSeatMap({
   };
 
   return (
-    <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5">
+    <div className="rounded-3xl bg-white p-4 shadow-sm ring-1 ring-black/5 sm:p-6">
       <div className="flex items-center justify-between gap-4">
         <div>
           <p className="text-xs font-semibold tracking-[0.25em] text-slate-500">
@@ -104,7 +102,7 @@ export default function BusSeatMap({
         </div>
       </div>
 
-      <div className="mt-6 grid gap-3">
+      <div className="mt-6 grid gap-2 sm:gap-3">
         {Array.from({ length: rows }).map((_, rowIndex) => {
           const seatA = buildSeatLabel(rowIndex, 0);
           const seatB = buildSeatLabel(rowIndex, 1);
@@ -112,7 +110,7 @@ export default function BusSeatMap({
           const seatD = buildSeatLabel(rowIndex, 3);
 
           return (
-            <div key={rowIndex} className="grid grid-cols-5 gap-3">
+            <div key={rowIndex} className="grid grid-cols-5 gap-2 sm:gap-3">
               <SeatButton
                 label={seatA}
                 status={getStatus(seatA)}
@@ -125,7 +123,7 @@ export default function BusSeatMap({
               />
 
               <div className="flex items-center justify-center">
-                <div className="h-10 w-2 rounded-full bg-slate-100" />
+                <div className="h-9 w-2 rounded-full bg-slate-100 sm:h-10" />
               </div>
 
               <SeatButton

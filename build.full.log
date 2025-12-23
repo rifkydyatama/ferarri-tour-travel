@@ -1,0 +1,53 @@
+
+> ferarri-tour-travel@0.1.0 build
+> next build --debug
+
+   Γû▓ Next.js 15.5.2
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully in 19.3s
+   Linting and checking validity of types ...
+
+./src/app/paket/[slug]/page.tsx
+155:11  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/Gallery.tsx
+26:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
+   Collecting page data ...
+ ΓÜá Using edge runtime on a page currently disables static generation for that page
+   Generating static pages (0/11) ...
+   Generating static pages (2/11) 
+   Generating static pages (5/11) 
+   Generating static pages (8/11) 
+ Γ£ô Generating static pages (11/11)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+
+Redirects
+Γöî source: /:path+/
+Γö£ destination: /:path+
+Γöö permanent: true
+
+
+Route (app)                                 Size  First Load JS
+Γöî Γùï /                                    44.6 kB         150 kB
+Γö£ Γùï /_not-found                            127 B         102 kB
+Γö£ Γùï /admin                                 127 B         102 kB
+Γö£ Γùï /admin/keuangan                      4.39 kB         106 kB
+Γö£ Γùï /admin/konten                        1.32 kB         103 kB
+Γö£ Γùï /booking/bus                         3.03 kB         105 kB
+Γö£ ╞Æ /paket/[slug]                          162 B         106 kB
+Γö£ Γùï /syarat-ketentuan                    1.97 kB         107 kB
+Γöö Γùï /tentang-kami                        1.97 kB         107 kB
++ First Load JS shared by all             102 kB
+  Γö£ chunks/255-e3bf15caf1f1e0f9.js       45.7 kB
+  Γö£ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  Γöö other shared chunks (total)          2.01 kB
+
+
+Γùï  (Static)   prerendered as static content
+╞Æ  (Dynamic)  server-rendered on demand
+

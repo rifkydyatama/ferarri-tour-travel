@@ -3,60 +3,46 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-type Destination = {
+type DestinationsContent = {
+  eyebrow: string;
   title: string;
-  price: string;
-  badge: "Best Seller" | "New" | "Family";
-  badgeClass: string;
-  gradientClass: string;
+  subtitle: string;
+  items: Array<{
+    title: string;
+    price: string;
+    badge: string;
+    badgeClass: string;
+    gradientClass: string;
+    ctaLabel: string;
+    ctaHref: string;
+  }>;
 };
 
-const DESTINATIONS: Destination[] = [
-  {
-    title: "Bali",
-    price: "Mulai Rp 1.250.000",
-    badge: "Best Seller",
-    badgeClass: "bg-sun text-slate-900",
-    gradientClass: "from-ferrari/60 via-plum/45 to-ocean/60",
-  },
-  {
-    title: "Bromo",
-    price: "Mulai Rp 950.000",
-    badge: "New",
-    badgeClass: "bg-leaf text-slate-900",
-    gradientClass: "from-ocean/60 via-leaf/45 to-sun/55",
-  },
-  {
-    title: "Lombok",
-    price: "Mulai Rp 1.150.000",
-    badge: "Family",
-    badgeClass: "bg-plum text-white",
-    gradientClass: "from-plum/60 via-ferrari/45 to-sun/55",
-  },
-];
+export default function Destinations({ content }: { content?: DestinationsContent }) {
+  const items = content?.items ?? [];
 
-export default function Destinations() {
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-6xl px-6 pb-20">
         <div className="flex flex-col gap-3">
           <p className="text-xs font-semibold tracking-[0.25em] text-slate-500">
-            DESTINATIONS
+            {content?.eyebrow ?? "DESTINATIONS"}
           </p>
           <div className="flex items-end justify-between gap-6">
             <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
               <span className="bg-linear-to-r from-ferrari via-plum to-ocean bg-clip-text text-transparent">
-                Popular Destinations
+                {content?.title ?? "Popular Destinations"}
               </span>
             </h2>
           </div>
           <p className="max-w-2xl text-base leading-7 text-slate-600">
-            Pilih destinasi favorit dan mulai rencanakan perjalanan paling seru.
+            {content?.subtitle ??
+              "Pilih destinasi favorit dan mulai rencanakan perjalanan paling seru."}
           </p>
         </div>
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {DESTINATIONS.map((item) => (
+          {items.map((item) => (
             <motion.article
               key={item.title}
               whileHover={{ y: -6 }}
@@ -96,10 +82,10 @@ export default function Destinations() {
 
                 <div className="mt-6">
                   <Link
-                    href="#"
+                    href={item.ctaHref}
                     className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
                   >
-                    Detail
+                    {item.ctaLabel}
                   </Link>
                 </div>
               </div>

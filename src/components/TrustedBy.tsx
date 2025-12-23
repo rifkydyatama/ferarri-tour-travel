@@ -2,19 +2,16 @@
 
 import { motion } from "framer-motion";
 
-const SCHOOLS = [
-  "SMKN 1 Blitar",
-  "MAN 2 Malang",
-  "SMA 1 Kediri",
-  "SMPN 3 Tulungagung",
-  "SMK PGRI 2 Jombang",
-  "MTsN 1 Pasuruan",
-  "SMA Muhammadiyah 1",
-  "SMKN 2 Probolinggo",
-] as const;
+type TrustedByContent = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  schools: string[];
+};
 
-export default function TrustedBy() {
-  const items = [...SCHOOLS, ...SCHOOLS];
+export default function TrustedBy({ content }: { content?: TrustedByContent }) {
+  const schools = content?.schools ?? [];
+  const items = [...schools, ...schools];
 
   return (
     <section className="bg-white">
@@ -22,14 +19,15 @@ export default function TrustedBy() {
         <div className="flex items-end justify-between gap-6">
           <div>
             <p className="text-xs font-semibold tracking-[0.25em] text-slate-500">
-              TRUSTED
+              {content?.eyebrow ?? "TRUSTED"}
             </p>
             <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
-              Dipercaya Oleh
+              {content?.title ?? "Dipercaya Oleh"}
             </h2>
           </div>
           <p className="hidden max-w-md text-sm leading-7 text-slate-600 sm:block">
-            Sekolah dan instansi yang mempercayakan perjalanan edukasi bersama kami.
+            {content?.subtitle ??
+              "Sekolah dan instansi yang mempercayakan perjalanan edukasi bersama kami."}
           </p>
         </div>
 

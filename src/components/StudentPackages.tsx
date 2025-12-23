@@ -3,68 +3,40 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-type PackageItem = {
-  slug: string;
+type StudentPackagesContent = {
+  eyebrow: string;
   title: string;
   subtitle: string;
-  badges: Array<{ label: string; className: string }>;
+  consultHref: string;
+  items: Array<{
+    slug: string;
+    title: string;
+    subtitle: string;
+    badges: Array<{ label: string; className: string }>;
+  }>;
 };
 
-const packages: PackageItem[] = [
-  {
-    slug: "jogja",
-    title: "Paket Study Tour Jogja",
-    subtitle: "Candi, museum, edukasi budaya + itinerary sekolah yang rapi.",
-    badges: [
-      { label: "SMP/MTs", className: "bg-sun text-slate-900" },
-      { label: "SMA", className: "bg-ocean text-white" },
-    ],
-  },
-  {
-    slug: "industri",
-    title: "Kunjungan Industri Surabaya",
-    subtitle: "Program khusus SMK: kunjungan pabrik/instansi + dokumentasi.",
-    badges: [{ label: "SMK", className: "bg-leaf text-slate-900" }],
-  },
-  {
-    slug: "religi",
-    title: "Wisata Religi Wali 5",
-    subtitle: "Rute religi untuk rombongan sekolah maupun umum, nyaman & terarah.",
-    badges: [
-      { label: "Umum", className: "bg-plum text-white" },
-      { label: "Best Seller", className: "bg-sun text-slate-900" },
-    ],
-  },
-  {
-    slug: "bromo",
-    title: "Paket Wisata Bromo",
-    subtitle: "Sunrise Bromo + spot ikonik, cocok untuk outing kelas & rombongan.",
-    badges: [
-      { label: "SMP/MTs", className: "bg-sun text-slate-900" },
-      { label: "SMA/SMK", className: "bg-ocean text-white" },
-    ],
-  },
-];
+export default function StudentPackages({ content }: { content?: StudentPackagesContent }) {
+  const items = content?.items ?? [];
 
-export default function StudentPackages() {
   return (
-    <section id="paket-pelajar" className="bg-white">
+    <section id="paket-pelajar" className="bg-white scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         <div className="flex flex-col gap-3">
           <p className="text-xs font-semibold tracking-[0.25em] text-slate-500">
-            STUDY TOUR
+            {content?.eyebrow ?? "STUDY TOUR"}
           </p>
           <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            Paket Pelajar & Rombongan
+            {content?.title ?? "Paket Pelajar & Rombongan"}
           </h2>
           <p className="max-w-2xl text-base leading-7 text-slate-600">
-            Fokus untuk sekolah: Study Tour, Kunjungan Industri SMK, dan Wisata
-            Umum.
+            {content?.subtitle ??
+              "Fokus untuk sekolah: Study Tour, Kunjungan Industri SMK, dan Wisata Umum."}
           </p>
         </div>
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {packages.map((pkg) => (
+          {items.map((pkg) => (
             <motion.article
               key={pkg.slug}
               whileHover={{ y: -6 }}
@@ -94,7 +66,7 @@ export default function StudentPackages() {
 
               <div className="mt-6 flex items-center gap-3">
                 <Link
-                  href="https://wa.me/"
+                  href={content?.consultHref ?? "https://wa.me/"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-2xl bg-ferrari px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-95"

@@ -72,11 +72,6 @@ export default function AdminDashboardPage() {
   const operationalCost = 20_000_000; // tickets, catering, crew
   const netProfit = totalRevenue - (vendorCost + operationalCost);
 
-  const pctBus = (busRentalCost / totalRevenue) * 100;
-  const pctHotel = (hotelRentalCost / totalRevenue) * 100;
-  const pctOps = (operationalCost / totalRevenue) * 100;
-  const pctProfit = Math.max(0, 100 - (pctBus + pctHotel + pctOps));
-
   return (
     <div className="space-y-8">
       <section>
@@ -99,8 +94,8 @@ export default function AdminDashboardPage() {
               </p>
               <p className="mt-1 text-xs text-slate-500">Total revenue dari klien</p>
             </div>
-            <div className="grid h-11 w-11 place-items-center rounded-xl bg-[var(--color-ferrari)]/10">
-              <Wallet className="h-5 w-5 text-[var(--color-ferrari)]" />
+            <div className="grid h-11 w-11 place-items-center rounded-xl bg-ferrari/10">
+              <Wallet className="h-5 w-5 text-ferrari" />
             </div>
           </div>
         </div>
@@ -145,7 +140,7 @@ export default function AdminDashboardPage() {
               <p className="mt-1 text-xs text-slate-600">Revenue - (Vendor + Ops)</p>
             </div>
             <div className="grid h-11 w-11 place-items-center rounded-xl bg-white">
-              <PieChart className="h-5 w-5 text-[var(--color-ferrari)]" />
+              <PieChart className="h-5 w-5 text-ferrari" />
             </div>
           </div>
         </div>
@@ -170,23 +165,19 @@ export default function AdminDashboardPage() {
         <div className="mt-5 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
           <div className="flex h-10 w-full">
             <div
-              className="h-full bg-[var(--color-ferrari)]"
-              style={{ width: `${pctBus}%` }}
+              className="h-full w-[46.6667%] bg-ferrari"
               title={`Sewa Bus: ${formatIDR(busRentalCost)}`}
             />
             <div
-              className="h-full bg-ocean"
-              style={{ width: `${pctHotel}%` }}
+              className="h-full w-[26.6667%] bg-ocean"
               title={`Sewa Hotel: ${formatIDR(hotelRentalCost)}`}
             />
             <div
-              className="h-full bg-sun"
-              style={{ width: `${pctOps}%` }}
+              className="h-full w-[13.3333%] bg-sun"
               title={`Operasional: ${formatIDR(operationalCost)}`}
             />
             <div
-              className="h-full bg-leaf"
-              style={{ width: `${pctProfit}%` }}
+              className="h-full w-[13.3333%] bg-leaf"
               title={`Profit: ${formatIDR(netProfit)}`}
             />
           </div>
@@ -195,7 +186,7 @@ export default function AdminDashboardPage() {
         <div className="mt-4 grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-4">
           <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3">
             <div className="flex items-center gap-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-ferrari)]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-ferrari" />
               <span className="font-semibold text-slate-900">Sewa Bus</span>
             </div>
             <span className="text-slate-600">{formatIDR(busRentalCost)}</span>

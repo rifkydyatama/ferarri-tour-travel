@@ -3,48 +3,47 @@
 import { motion } from "framer-motion";
 import { Bus, GraduationCap, Wallet } from "lucide-react";
 
-const FEATURES = [
-  {
-    title: "Edukasi & Fun",
-    description: "Program wisata yang mendidik — siswa belajar sambil menikmati perjalanan.",
-    Icon: GraduationCap,
-    colorClass: "text-ocean",
-    bgClass: "bg-ocean/10",
-  },
-  {
-    title: "Harga Ramah Pelajar",
-    description: "Paket hemat khusus sekolah tanpa mengurangi kualitas pelayanan.",
-    Icon: Wallet,
-    colorClass: "text-ferrari",
-    bgClass: "bg-ferrari/10",
-  },
-  {
-    title: "Armada Bus Terbaru",
-    description: "Kenyamanan & keselamatan siswa prioritas utama sepanjang perjalanan.",
-    Icon: Bus,
-    colorClass: "text-leaf",
-    bgClass: "bg-leaf/10",
-  },
-] as const;
+type FeatureItem = {
+  title: string;
+  description: string;
+  icon: "GraduationCap" | "Wallet" | "Bus";
+  colorClass: string;
+  bgClass: string;
+};
 
-export default function Features() {
+type FeaturesContent = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  items: FeatureItem[];
+};
+
+const ICONS = {
+  GraduationCap,
+  Wallet,
+  Bus,
+} as const;
+
+export default function Features({ content }: { content?: FeaturesContent }) {
   return (
-    <section className="bg-white">
+    <section id="tentang" className="bg-white scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         <div className="max-w-2xl">
           <p className="text-xs font-semibold tracking-[0.25em] text-slate-500">
-            FEATURES
+            {content?.eyebrow ?? "FEATURES"}
           </p>
           <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            Kenapa Ferrari Jaya Group
+            {content?.title ?? "Kenapa Ferrari Jaya Group"}
           </h2>
           <p className="mt-4 text-base leading-7 text-slate-600">
-            Desain layanan yang rapi, terasa cepat, dan tetap fun.
+            {content?.subtitle ?? "Desain layanan yang rapi, terasa cepat, dan tetap fun."}
           </p>
         </div>
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {FEATURES.map(({ title, description, Icon, colorClass, bgClass }) => (
+          {(content?.items ?? []).map(({ title, description, icon, colorClass, bgClass }) => {
+            const Icon = ICONS[icon] ?? GraduationCap;
+            return (
             <motion.article
               key={title}
               whileHover={{ scale: 1.03 }}
@@ -61,7 +60,8 @@ export default function Features() {
               </div>
               <p className="mt-4 text-sm leading-7 text-slate-600">{description}</p>
             </motion.article>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

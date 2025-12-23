@@ -1,38 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 type GalleryItem = {
   src: string;
   caption: string;
 };
 
-const ITEMS: GalleryItem[] = [
-  {
-    src: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1600&q=80",
-    caption: "SMAN 1 di Bali",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=1600&q=80",
-    caption: "Study Tour di Jogja",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1529078155058-5d716f45d604?auto=format&fit=crop&w=1600&q=80",
-    caption: "Armada Bus Berangkat Pagi",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1600&q=80",
-    caption: "Kenyamanan di Dalam Bus",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1600&q=80",
-    caption: "Kunjungan Industri TVRI",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1600&q=80",
-    caption: "Rombongan Siswa Happy",
-  },
-];
+type GalleryContent = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  items: GalleryItem[];
+};
 
 function GalleryCard({ src, caption }: GalleryItem) {
   return (
@@ -43,9 +24,11 @@ function GalleryCard({ src, caption }: GalleryItem) {
       style={{ breakInside: "avoid" }}
     >
       <div className="relative">
-        <img
+        <Image
           src={src}
           alt={caption}
+          width={1200}
+          height={800}
           className="h-auto w-full origin-center scale-100 object-cover transition-transform duration-300 ease-out group-hover:scale-[1.06]"
           loading="lazy"
           referrerPolicy="no-referrer"
@@ -61,22 +44,27 @@ function GalleryCard({ src, caption }: GalleryItem) {
   );
 }
 
-export default function Gallery() {
+export default function Gallery({ content }: { content?: GalleryContent }) {
+  const items = content?.items ?? [];
+
   return (
-    <section className="bg-white">
+    <section id="armada" className="bg-white scroll-mt-24">
       <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         <div className="max-w-2xl">
-          <p className="text-xs font-semibold tracking-[0.25em] text-slate-500">GALLERY</p>
+          <p className="text-xs font-semibold tracking-[0.25em] text-slate-500">
+            {content?.eyebrow ?? "GALLERY"}
+          </p>
           <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            Dokumentasi Keseruan
+            {content?.title ?? "Dokumentasi Keseruan"}
           </h2>
           <p className="mt-4 text-base leading-7 text-slate-600">
-            Momen terbaik dari study tour, kunjungan industri, dan wisata rombongan.
+            {content?.subtitle ??
+              "Momen terbaik dari study tour, kunjungan industri, dan wisata rombongan."}
           </p>
         </div>
 
         <div className="mt-10 columns-1 gap-5 sm:columns-2 lg:columns-3">
-          {ITEMS.map((item) => (
+          {items.map((item) => (
             <GalleryCard key={item.caption} {...item} />
           ))}
         </div>

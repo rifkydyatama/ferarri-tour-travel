@@ -1,0 +1,18 @@
+import LoginForm from "@/components/auth/LoginForm";
+
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const params = (await searchParams) ?? {};
+  const nextParam = params.next;
+
+  const nextPath =
+    typeof nextParam === "string" && nextParam.startsWith("/")
+      ? nextParam
+      : "/admin";
+
+  return <LoginForm nextPath={nextPath} />;
+}
+

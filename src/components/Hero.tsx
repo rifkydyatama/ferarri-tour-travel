@@ -3,7 +3,27 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-export default function Hero() {
+type HeroContent = {
+  title: string;
+  subtitle: string;
+  primary: { label: string; href: string };
+  secondary: { label: string; href: string };
+};
+
+function isExternalHref(href: string) {
+  return /^https?:\/\//i.test(href);
+}
+
+export default function Hero({ content }: { content?: HeroContent }) {
+  const title = content?.title ?? "Partner Terbaik Study Tour & Wisata Sekolah";
+  const subtitle =
+    content?.subtitle ??
+    "Mengajak siswa belajar sambil berwisata. Solusi lengkap untuk SD, SMP, SMA, SMK, dan Umum dengan harga pelajar.";
+  const primary = content?.primary ?? { label: "Lihat Paket Pelajar", href: "/#paket-pelajar" };
+  const secondary = content?.secondary ?? { label: "Konsultasi Guru", href: "https://wa.me/" };
+
+  const secondaryExternal = isExternalHref(secondary.href);
+
   return (
     <section className="relative min-h-svh overflow-hidden">
       <div className="absolute inset-0 bg-linear-to-br from-ferrari via-plum to-ocean" />
@@ -21,29 +41,28 @@ export default function Hero() {
           transition={{ duration: 0.95, ease: [0.16, 1, 0.3, 1] }}
           className="text-balance text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl md:text-7xl"
         >
-          Partner Terbaik Study Tour & Wisata Sekolah
+          {title}
         </motion.h1>
 
         <p className="mt-5 max-w-2xl text-base leading-7 text-white/90 sm:text-lg">
-          Mengajak siswa belajar sambil berwisata. Solusi lengkap untuk SD, SMP, SMA, SMK,
-          dan Umum dengan harga pelajar.
+          {subtitle}
         </p>
 
         <div className="mt-10 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
           <Link
-            href="/#paket-pelajar"
+            href={primary.href}
             className="inline-flex items-center justify-center rounded-2xl bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition hover:bg-white/90"
           >
-            Lihat Paket Pelajar
+            {primary.label}
           </Link>
 
           <Link
-            href="https://wa.me/"
-            target="_blank"
-            rel="noopener noreferrer"
+            href={secondary.href}
+            target={secondaryExternal ? "_blank" : undefined}
+            rel={secondaryExternal ? "noopener noreferrer" : undefined}
             className="inline-flex items-center justify-center rounded-2xl border border-white/50 bg-transparent px-6 py-3 text-sm font-semibold text-white transition hover:border-white/80"
           >
-            Konsultasi Guru
+            {secondary.label}
           </Link>
         </div>
       </div>
