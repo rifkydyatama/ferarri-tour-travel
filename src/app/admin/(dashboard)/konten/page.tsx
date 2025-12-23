@@ -3,6 +3,7 @@ import LandingContentEditor from "./LandingContentEditor";
 import { FileText } from "lucide-react";
 
 export const dynamic = "force-dynamic";
+export const runtime = "edge";
 
 export default async function KontenPage() {
   // Ambil data konten terbaru dari server/file
