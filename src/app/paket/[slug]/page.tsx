@@ -133,12 +133,13 @@ function formatIDR(value: number) {
   }).format(value);
 }
 
-export default function PackageDetailPage({
+export default async function PackageDetailPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const pkg = PACKAGES[params.slug];
+  const { slug } = await params;
+  const pkg = PACKAGES[slug];
   if (!pkg) notFound();
 
   const waHref = "https://wa.me/";
