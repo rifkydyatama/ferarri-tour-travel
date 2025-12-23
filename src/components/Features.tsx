@@ -1,27 +1,27 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Bus, Shield, Wallet } from "lucide-react";
+import { Bus, GraduationCap, Wallet } from "lucide-react";
 
 const FEATURES = [
   {
-    title: "Premium Fleet",
-    description: "Armada nyaman, bersih, dan siap perjalanan jauh.",
-    Icon: Bus,
-    colorClass: "text-ferrari",
-    bgClass: "bg-ferrari/10",
-  },
-  {
-    title: "Best Price",
-    description: "Harga bersaing dengan layanan yang tetap premium.",
-    Icon: Wallet,
+    title: "Edukasi & Fun",
+    description: "Program wisata yang mendidik — siswa belajar sambil menikmati perjalanan.",
+    Icon: GraduationCap,
     colorClass: "text-ocean",
     bgClass: "bg-ocean/10",
   },
   {
-    title: "Safety First",
-    description: "Standar keamanan dan kru berpengalaman untuk setiap trip.",
-    Icon: Shield,
+    title: "Harga Ramah Pelajar",
+    description: "Paket hemat khusus sekolah tanpa mengurangi kualitas pelayanan.",
+    Icon: Wallet,
+    colorClass: "text-ferrari",
+    bgClass: "bg-ferrari/10",
+  },
+  {
+    title: "Armada Bus Terbaru",
+    description: "Kenyamanan & keselamatan siswa prioritas utama sepanjang perjalanan.",
+    Icon: Bus,
     colorClass: "text-leaf",
     bgClass: "bg-leaf/10",
   },

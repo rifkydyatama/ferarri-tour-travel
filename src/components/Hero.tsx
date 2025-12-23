@@ -21,27 +21,29 @@ export default function Hero() {
           transition={{ duration: 0.95, ease: [0.16, 1, 0.3, 1] }}
           className="text-balance text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl md:text-7xl"
         >
-          Liburan Seru Tanpa Ragu
+          Partner Terbaik Study Tour & Wisata Sekolah
         </motion.h1>
 
         <p className="mt-5 max-w-2xl text-base leading-7 text-white/90 sm:text-lg">
-          PT Ferrari Jaya Group — Tour & Travel. Energi penuh warna, pelayanan rapi, dan
-          perjalanan yang bikin nagih.
+          Mengajak siswa belajar sambil berwisata. Solusi lengkap untuk SD, SMP, SMA, SMK,
+          dan Umum dengan harga pelajar.
         </p>
 
         <div className="mt-10 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
           <Link
-            href="/"
+            href="/#paket-pelajar"
             className="inline-flex items-center justify-center rounded-2xl bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition hover:bg-white/90"
           >
-            Cek Jadwal Bus
+            Lihat Paket Pelajar
           </Link>
 
           <Link
-            href="/"
+            href="https://wa.me/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-2xl border border-white/50 bg-transparent px-6 py-3 text-sm font-semibold text-white transition hover:border-white/80"
           >
-            Paket Wisata
+            Konsultasi Guru
           </Link>
         </div>
       </div>
