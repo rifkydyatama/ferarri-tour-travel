@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone, ArrowUpRight } from "lucide-react";
 
 type FooterContent = {
   description: string;
@@ -15,73 +17,69 @@ type FooterContent = {
 };
 
 export default function Footer({ content }: { content?: FooterContent }) {
-  const description = content?.description ??
-    "Travel & Tour terpercaya untuk perjalanan yang seru, nyaman, dan penuh warna.";
   const quickLinks = content?.quickLinks ?? [];
   const contact = content?.contact;
 
   return (
-    <footer id="kontak" className="bg-gray-900 text-white scroll-mt-24">
-      <div className="mx-auto max-w-6xl px-6 py-14">
-        <div className="grid gap-10 md:grid-cols-3">
-          <div>
-            <div className="text-lg font-extrabold tracking-tight">
-              <span className="bg-linear-to-r from-ferrari to-sun bg-clip-text text-transparent">
-                Ferrari Jaya
-              </span>
-            </div>
-            <p className="mt-4 max-w-sm text-sm leading-7 text-white/70">{description}</p>
+    <footer id="kontak" className="bg-black text-white pt-24 pb-12 rounded-t-[3rem] mt-[-3rem] relative z-20">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4 mb-16">
+          {/* Brand */}
+          <div className="lg:col-span-2">
+            <Link href="/" className="inline-block mb-6">
+                <span className="text-3xl font-black tracking-tighter italic">
+                  <span className="text-ferrari">FERRARI</span>
+                  <span className="text-white">TOUR</span>
+                </span>
+            </Link>
+            <p className="text-lg text-white/60 font-medium max-w-sm leading-relaxed">
+              {content?.description ?? "Partner perjalanan edukasi & wisata nomor satu untuk sekolah yang pengen experience lebih dari sekadar jalan-jalan."}
+            </p>
           </div>
 
+          {/* Links */}
           <div>
-            <h3 className="text-sm font-bold tracking-[0.2em] text-white/80">QUICK LINKS</h3>
-            <div className="mt-4 grid gap-3 text-sm">
+            <h3 className="font-mono text-acid font-bold tracking-widest mb-6">MENU</h3>
+            <ul className="space-y-4">
               {quickLinks.map((l) => (
-                <Link
-                  key={l.label}
-                  href={l.href}
-                  className="text-white/70 transition hover:text-white"
-                >
-                  {l.label}
-                </Link>
+                <li key={l.label}>
+                  <Link href={l.href} className="text-white/70 hover:text-white font-bold transition-colors flex items-center gap-2 group">
+                    {l.label}
+                    <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
 
+          {/* Contact */}
           <div>
-            <h3 className="text-sm font-bold tracking-[0.2em] text-white/80">CONTACT</h3>
-            <div className="mt-4 grid gap-4 text-sm text-white/70">
-              <div className="flex items-start gap-3">
-                <MapPin className="mt-0.5 h-5 w-5 text-ocean" />
-                <div>
-                  <p className="font-semibold text-white">
-                    {contact?.addressLabel ?? "Address"}
-                  </p>
-                  <p>{contact?.address ?? "Jl. Contoh Alamat No. 123, Indonesia"}</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <Phone className="mt-0.5 h-5 w-5 text-sun" />
-                <div>
-                  <p className="font-semibold text-white">{contact?.phoneLabel ?? "Phone"}</p>
-                  <p>{contact?.phone ?? "+62 8xx-xxxx-xxxx"}</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <Mail className="mt-0.5 h-5 w-5 text-leaf" />
-                <div>
-                  <p className="font-semibold text-white">{contact?.emailLabel ?? "Email"}</p>
-                  <p>{contact?.email ?? "hello@ferrarijaya.co.id"}</p>
-                </div>
-              </div>
-            </div>
+             <h3 className="font-mono text-acid font-bold tracking-widest mb-6">KONTAK</h3>
+             <ul className="space-y-4">
+                <li className="flex items-start gap-3 text-white/70">
+                    <MapPin className="w-5 h-5 text-ferrari shrink-0" />
+                    <span className="font-medium">{contact?.address || "Indonesia"}</span>
+                </li>
+                <li className="flex items-center gap-3 text-white/70">
+                    <Phone className="w-5 h-5 text-ferrari shrink-0" />
+                    <span className="font-medium">{contact?.phone || "+62 812-3456-7890"}</span>
+                </li>
+                <li className="flex items-center gap-3 text-white/70">
+                    <Mail className="w-5 h-5 text-ferrari shrink-0" />
+                    <span className="font-medium">{contact?.email || "hello@ferrari.com"}</span>
+                </li>
+             </ul>
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-8 text-xs text-white/50">
-          © {new Date().getFullYear()} Ferrari Jaya Group. All rights reserved.
+        {/* Bottom */}
+        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-sm font-bold text-white/40">
+            © {new Date().getFullYear()} Ferrari Tour & Travel. All rights reserved.
+          </p>
+          <p className="text-sm font-bold text-white/40">
+            Dibuat dengan 🔥 oleh Tim IT
+          </p>
         </div>
       </div>
     </footer>

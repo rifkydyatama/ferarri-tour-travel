@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { MessageCircle } from "lucide-react";
 
 type CallToActionContent = {
   title: string;
@@ -9,55 +10,35 @@ type CallToActionContent = {
   secondary: { label: string; href: string };
 };
 
-function isExternalHref(href: string) {
-  return /^https?:\/\//i.test(href);
-}
-
 export default function CallToAction({ content }: { content?: CallToActionContent }) {
   const whatsappHref = content?.whatsappHref ?? "https://wa.me/";
-  const secondary = content?.secondary ?? { label: "Minta Proposal", href: "/#kontak" };
-  const secondaryExternal = isExternalHref(secondary.href);
-
+  
   return (
-    <section className="bg-white">
-      <div className="mx-auto max-w-6xl px-6 pb-20">
-        <div className="relative overflow-hidden rounded-[2.5rem] bg-linear-to-r from-ferrari to-sun px-8 py-12 text-white shadow-sm sm:px-12 sm:py-14">
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute -left-10 -top-10 h-44 w-44 rounded-full bg-white/15 blur-2xl" />
-            <div className="absolute -right-16 top-6 h-56 w-56 rounded-full bg-white/10 blur-2xl" />
-            <div className="absolute -bottom-20 left-1/3 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
-          </div>
+    <section className="bg-white px-4 py-12">
+      <div className="mx-auto max-w-6xl relative overflow-hidden rounded-[3rem] bg-ferrari px-6 py-20 text-center sm:px-16 sm:py-24 shadow-2xl shadow-ferrari/30">
+        
+        {/* Decorative Circles */}
+        <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-acid rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob" />
+        <div className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-96 h-96 bg-purple rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob [animation-delay:2s]" />
 
-          <div className="relative flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-center">
-            <div className="max-w-2xl">
-              <h2 className="text-balance text-3xl font-extrabold tracking-tight sm:text-4xl">
-                {content?.title ?? "Rencanakan Study Tour Tanpa Pusing!"}
-              </h2>
-              <p className="mt-3 text-sm leading-7 text-white/90 sm:text-base">
-                {content?.description ??
-                  "Kami bantu susun itinerary, izin, hingga laporan perjalanan. Guru tinggal terima beres."}
-              </p>
-            </div>
+        <div className="relative z-10 max-w-3xl mx-auto">
+          <h2 className="text-4xl font-black tracking-tighter text-white sm:text-6xl mb-6">
+            {content?.title ?? "JANGAN CUMA WACANA, AYO BERANGKAT!"}
+          </h2>
+          <p className="mb-10 text-xl font-medium text-white/90">
+            {content?.description ??
+              "Konsultasi gratis, tanya-tanya dulu boleh banget. Kita bantu susun rencana study tour yang paling pas buat sekolahmu."}
+          </p>
 
-            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
-              <Link
-                href={whatsappHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm font-semibold text-ferrari shadow-sm transition hover:bg-white/90"
-              >
-                Konsultasi WA
-              </Link>
-
-              <Link
-                href={secondary.href}
-                target={secondaryExternal ? "_blank" : undefined}
-                rel={secondaryExternal ? "noopener noreferrer" : undefined}
-                className="inline-flex items-center justify-center rounded-full border border-white/60 bg-transparent px-7 py-3 text-sm font-semibold text-white transition hover:border-white/80"
-              >
-                {secondary.label}
-              </Link>
-            </div>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href={whatsappHref}
+              target="_blank"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-lg font-bold text-ferrari transition hover:scale-105 hover:bg-acid hover:text-black shadow-lg"
+            >
+              <MessageCircle className="w-5 h-5" />
+              Chat WhatsApp Sekarang
+            </Link>
           </div>
         </div>
       </div>
