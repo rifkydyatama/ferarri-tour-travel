@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ArrowRight, Star } from "lucide-react";
 
 type HeroContent = {
   title: string;
@@ -10,62 +11,96 @@ type HeroContent = {
   secondary: { label: string; href: string };
 };
 
-function isExternalHref(href: string) {
-  return /^https?:\/\//i.test(href);
-}
-
 export default function Hero({ content }: { content?: HeroContent }) {
-  const title = content?.title ?? "Partner Terbaik Study Tour & Wisata Sekolah";
-  const subtitle =
-    content?.subtitle ??
-    "Mengajak siswa belajar sambil berwisata. Solusi lengkap untuk SD, SMP, SMA, SMK, dan Umum dengan harga pelajar.";
-  const primary = content?.primary ?? { label: "Lihat Paket Pelajar", href: "/#paket-pelajar" };
-  const secondary = content?.secondary ?? { label: "Konsultasi Guru", href: "https://wa.me/" };
-
-  const secondaryExternal = isExternalHref(secondary.href);
+  const title = content?.title ?? "STUDY TOUR LEVEL UP!";
+  const subtitle = content?.subtitle ?? "Bukan sekadar jalan-jalan. Ini pengalaman core memory buat siswa SD, SMP, SMA & Umum. Harga pelajar, fasilitas sultan.";
+  const primary = content?.primary ?? { label: "Cek Paket Hits", href: "/#paket-pelajar" };
+  const secondary = content?.secondary ?? { label: "Chat Admin", href: "https://wa.me/" };
 
   return (
-    <section className="relative min-h-svh overflow-hidden">
-      <div className="absolute inset-0 bg-linear-to-br from-ferrari via-plum to-ocean" />
-
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-sun/40 blur-2xl animate-blob" />
-        <div className="absolute -right-24 top-10 h-80 w-80 rounded-full bg-leaf/35 blur-2xl animate-blob [animation-delay:2.5s]" />
-        <div className="absolute -bottom-28 left-1/3 h-96 w-96 rounded-full bg-white/20 blur-2xl animate-blob [animation-delay:5s]" />
+    <section className="relative min-h-[110svh] flex flex-col items-center justify-center overflow-hidden bg-white pt-20">
+      
+      {/* Background Gradients (The Aura) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-300/30 rounded-full blur-[100px] mix-blend-multiply animate-blob" />
+        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-acid/30 rounded-full blur-[100px] mix-blend-multiply animate-blob [animation-delay:2s]" />
+        <div className="absolute -bottom-32 left-1/2 w-[600px] h-[600px] bg-ferrari/10 rounded-full blur-[120px] mix-blend-multiply animate-blob [animation-delay:4s]" />
       </div>
 
-      <div className="relative mx-auto flex min-h-svh max-w-6xl flex-col items-center justify-center px-6 text-center text-white">
-        <motion.h1
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.95, ease: [0.16, 1, 0.3, 1] }}
-          className="text-balance text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl md:text-7xl"
+      {/* Grid Pattern overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+
+      <div className="relative z-10 mx-auto max-w-6xl px-6 text-center">
+        
+        {/* Badge Gen Alpha */}
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/50 backdrop-blur-sm px-4 py-1.5 mb-8 shadow-sm"
         >
-          {title}
+          <span className="flex h-2 w-2 rounded-full bg-ferrari animate-pulse" />
+          <span className="text-xs font-bold tracking-wide uppercase text-slate-600">
+            #1 Pilihan Sekolah Kekinian
+          </span>
+        </motion.div>
+
+        {/* Massive Title */}
+        <motion.h1
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="text-balance text-6xl font-black tracking-tighter sm:text-7xl md:text-8xl lg:text-9xl text-slate-900"
+        >
+          MAKIN <span className="bg-gradient-to-r from-ferrari via-pink-500 to-purple-600 bg-clip-text text-transparent">SERU</span>
+          <br />
+          <span className="relative inline-block">
+            BELAJARNYA
+            <motion.span 
+              className="absolute -right-8 -top-8 text-acid"
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 4 }}
+            >
+              <Star className="w-12 h-12 fill-acid stroke-black" strokeWidth={1} />
+            </motion.span>
+          </span>
         </motion.h1>
 
-        <p className="mt-5 max-w-2xl text-base leading-7 text-white/90 sm:text-lg">
+        <motion.p
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mx-auto mt-8 max-w-2xl text-lg font-medium leading-relaxed text-slate-600 sm:text-xl"
+        >
           {subtitle}
-        </p>
+        </motion.p>
 
-        <div className="mt-10 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
+        {/* Buttons */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
+        >
           <Link
             href={primary.href}
-            className="inline-flex items-center justify-center rounded-2xl bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition hover:bg-white/90"
+            className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-slate-900 px-8 py-4 text-base font-bold text-white transition-all hover:bg-slate-800 hover:ring-4 hover:ring-slate-200"
           >
-            {primary.label}
+            <span>{primary.label}</span>
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
 
           <Link
             href={secondary.href}
-            target={secondaryExternal ? "_blank" : undefined}
-            rel={secondaryExternal ? "noopener noreferrer" : undefined}
-            className="inline-flex items-center justify-center rounded-2xl border border-white/50 bg-transparent px-6 py-3 text-sm font-semibold text-white transition hover:border-white/80"
+            target="_blank"
+            className="inline-flex items-center justify-center rounded-full border-2 border-slate-200 bg-white px-8 py-4 text-base font-bold text-slate-900 transition-all hover:border-ferrari hover:text-ferrari hover:bg-ferrari/5"
           >
             {secondary.label}
           </Link>
-        </div>
+        </motion.div>
       </div>
+      
+      {/* Decorative Bottom Fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none" />
     </section>
   );
 }

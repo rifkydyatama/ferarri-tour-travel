@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 type NavbarContent = {
   brandLabel: string;
@@ -14,112 +15,107 @@ export default function Navbar({ content }: { content?: NavbarContent }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  const brandLabel = content?.brandLabel ?? "FERRARI JAYA";
+  const brandLabel = content?.brandLabel ?? "FERRARI";
   const links = content?.links ?? [
     { label: "Tentang", href: "/#tentang" },
     { label: "Armada", href: "/#armada" },
-    { label: "Kontak", href: "/#kontak" },
+    { label: "Destinasi", href: "/#destinasi" },
   ];
-  const cta = content?.cta ?? { label: "Booking Bus", href: "/booking/bus" };
+  const cta = content?.cta ?? { label: "Gas Booking 🚀", href: "/booking/bus" };
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 8);
+    const onScroll = () => setIsScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    if (!isMobileOpen) return;
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsMobileOpen(false);
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [isMobileOpen]);
-
   return (
-    <header className="sticky top-0 z-50">
-      <div
-        className={
-          "transition-all " +
-          (isScrolled
-            ? "bg-white/95 shadow-sm backdrop-blur supports-backdrop-filter:bg-white/80"
-            : "bg-transparent")
-        }
-      >
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link href="/" className="text-lg font-extrabold tracking-tight">
-            <span className="bg-linear-to-r from-ferrari to-sun bg-clip-text text-transparent">
-              {brandLabel}
+    <>
+      <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4">
+        <motion.nav
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 100, damping: 20 }}
+          className={`
+            relative flex items-center justify-between px-2 py-2 transition-all duration-300
+            ${isScrolled 
+              ? "w-full max-w-4xl rounded-full bg-white/70 backdrop-blur-xl border border-white/40 shadow-xl shadow-black/5" 
+              : "w-full max-w-6xl rounded-2xl bg-transparent"}
+          `}
+        >
+          {/* Brand */}
+          <Link href="/" className="pl-4 group relative flex items-center gap-2">
+            <div className="absolute inset-0 bg-acid blur-xl opacity-0 transition-opacity group-hover:opacity-40 rounded-full" />
+            <span className="relative text-xl font-black tracking-tighter italic">
+              <span className="text-ferrari">{brandLabel}</span>
+              <span className="text-slate-800">TOUR</span>
             </span>
           </Link>
 
-          <div className="hidden items-center gap-8 md:flex">
+          {/* Desktop Links */}
+          <div className="hidden md:flex items-center gap-1 bg-white/50 p-1.5 rounded-full border border-white/50 backdrop-blur-md">
             {links.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-sm font-semibold text-slate-700 transition hover:text-slate-950"
+                className="px-5 py-2 rounded-full text-sm font-bold text-slate-600 hover:bg-white hover:text-black hover:shadow-sm transition-all duration-200"
               >
                 {item.label}
               </Link>
             ))}
+          </div>
 
+          {/* CTA & Mobile Toggle */}
+          <div className="flex items-center gap-2 pr-1">
             <Link
               href={cta.href}
-              className="inline-flex items-center justify-center rounded-2xl bg-ferrari px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-95"
+              className="hidden md:inline-flex items-center gap-2 rounded-full bg-black px-6 py-3 text-sm font-bold text-white transition hover:scale-105 hover:bg-ferrari active:scale-95 shadow-lg shadow-ferrari/20"
             >
               {cta.label}
+              <Sparkles className="w-4 h-4 text-acid" />
             </Link>
-          </div>
 
-          <button
-            type="button"
-            aria-label={isMobileOpen ? "Tutup menu" : "Buka menu"}
-            aria-controls="mobile-menu"
-            onClick={() => setIsMobileOpen((v) => !v)}
-            className="inline-flex items-center justify-center rounded-xl p-2 text-slate-900 md:hidden"
+            <button
+              onClick={() => setIsMobileOpen(!isMobileOpen)}
+              className="md:hidden p-3 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-900"
+            >
+              {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+        </motion.nav>
+      </header>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="fixed inset-x-4 top-24 z-40 rounded-3xl bg-white border border-slate-100 shadow-2xl p-6 md:hidden"
           >
-            {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
-        </nav>
-
-        <div
-          id="mobile-menu"
-          className={
-            "md:hidden " +
-            (isMobileOpen ? "block" : "hidden")
-          }
-        >
-          <div className="mx-auto max-w-6xl px-6 pb-5">
-            <div className="rounded-2xl bg-white shadow-sm ring-1 ring-black/5">
-              <div className="grid gap-1 p-2">
-                {links.map((item) => (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setIsMobileOpen(false)}
-                    className="rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 hover:text-slate-950"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-
-                <div className="px-2 pt-2">
-                  <Link
-                    href={cta.href}
-                    onClick={() => setIsMobileOpen(false)}
-                    className="inline-flex w-full items-center justify-center rounded-2xl bg-ferrari px-5 py-3 text-sm font-semibold text-white transition hover:opacity-95"
-                  >
-                    {cta.label}
-                  </Link>
-                </div>
-              </div>
+            <div className="flex flex-col gap-4">
+              {links.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setIsMobileOpen(false)}
+                  className="text-lg font-bold text-slate-800 py-2 border-b border-slate-100"
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <Link
+                href={cta.href}
+                className="mt-2 flex items-center justify-center gap-2 w-full rounded-xl bg-ferrari py-4 text-white font-bold"
+              >
+                {cta.label}
+              </Link>
             </div>
-          </div>
-        </div>
-      </div>
-    </header>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
