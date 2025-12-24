@@ -33,3 +33,35 @@ export async function updateTourLocation(bookingId: string, location: string, st
   revalidatePath("/admin");
   return { ok: true } as const;
 }
+
+export async function submitLiveReport(
+  bookingId: string,
+  latitude: number,
+  longitude: number,
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  const { ok, user } = await requireAdminUser();
+  if (!ok) return { ok: false, error: "Unauthorized" };
+
+  if (!bookingId || Number.isNaN(latitude) || Number.isNaN(longitude)) {
+    return { ok: false, error: "Missing booking or coordinates" };
+  }
+
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return { ok: false, error: "Supabase client not initialized" };
+
+  const { error } = await supabase.from("tour_live_reports").insert([
+    {
+      booking_id: bookingId,
+      location: `${latitude},${longitude}`,
+      status_update: "Location update",
+      reporter_id: user.id,
+    },
+  ]);
+
+  if (error) {
+    return { ok: false, error: error.message };
+  }
+
+  revalidatePath("/admin");
+  return { ok: true };
+}

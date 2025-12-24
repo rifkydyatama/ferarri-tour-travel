@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useId, useMemo, useState, useTransition } from "react";
 import { CheckCircle2, Loader2, UserRound } from "lucide-react";
 
 import { assignTourLeader } from "./actions";
@@ -56,6 +56,7 @@ function Card({
   booking: BookingItem;
   options: { value: string; label: string }[];
 }) {
+  const selectId = useId();
   const [selected, setSelected] = useState<string>(options[0]?.value ?? "");
   const [message, setMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -74,9 +75,12 @@ function Card({
       </div>
 
       <div className="mt-4 grid gap-3">
-        <label className="text-xs font-semibold text-white/70">Assign to</label>
+        <label htmlFor={selectId} className="text-xs font-semibold text-white/70">
+          Assign to
+        </label>
         <div className="relative">
           <select
+            id={selectId}
             value={selected}
             onChange={(e) => setSelected(e.target.value)}
             className="h-11 w-full appearance-none rounded-xl border border-white/10 bg-white/10 px-4 pr-10 text-sm font-semibold text-white outline-none transition focus:border-white/30 focus:bg-white/15"

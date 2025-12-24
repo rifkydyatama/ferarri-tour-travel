@@ -91,11 +91,7 @@ export async function requireAdminUser(): Promise<{ ok: boolean; user: User; rol
     return { ok: false, user: sessionUser, role: "" };
   }
 
-  const roleRaw = (adminRow as Record<string, unknown> | null)?.role;
-  const role =
-    typeof roleRaw === "string" && roleRaw.trim().length > 0
-      ? roleRaw.trim().toLowerCase()
-      : "marketing";
+  const role = normalizeAdminRole((adminRow as Record<string, unknown> | null)?.role) ?? "";
 
   return { ok: true, user: sessionUser, role };
 }

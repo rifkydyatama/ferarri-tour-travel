@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { BarChart3, Camera, ClipboardPlus, FileText, MapPin } from "lucide-react";
 
 import { createSupabaseServerClient, requireAdminUser } from "@/lib/supabase/server";
+import TourLeaderPanel from "@/components/dashboard/TourLeaderPanel";
 
 export const runtime = "edge";
 
@@ -23,60 +24,30 @@ function cx(...values: Array<string | false | null | undefined>) {
 async function MarketingDashboard({ userId }: { userId: string }) {
   const supabase = await createSupabaseServerClient();
 
-  let isOnTour = false;
   if (supabase) {
     const { data, error } = await supabase
       .from("bookings")
-      .select("id")
+      .select("id, client_name, destination")
       .eq("tour_leader_id", userId)
       .eq("status", "On Tour")
-      .limit(1);
+      .limit(1)
+      .maybeSingle();
 
-    isOnTour = !error && (data?.length ?? 0) > 0;
-  }
+    if (!error && data) {
+      return (
+        <section className="mx-auto w-full max-w-2xl">
+          <div className="space-y-6">
+            <div className="rounded-3xl bg-linear-to-br from-red-600 via-red-500 to-orange-500 p-6 text-white shadow-lg">
+              <div className="text-xs font-semibold tracking-[0.25em] uppercase text-white/80">Trip</div>
+              <div className="mt-2 text-2xl font-extrabold tracking-tight">{data.client_name || "Active Tour"}</div>
+              <p className="mt-2 text-sm text-white/85">On-tour tools at your fingertips.</p>
+            </div>
 
-  if (isOnTour) {
-    const tripName = "Active Tour";
-
-    return (
-      <section className="mx-auto w-full max-w-2xl">
-        <div className="space-y-6">
-          <div className="rounded-3xl bg-linear-to-br from-red-600 via-red-500 to-orange-500 p-6 text-white shadow-lg">
-            <div className="text-xs font-semibold tracking-[0.25em] uppercase text-white/80">Trip</div>
-            <div className="mt-2 text-2xl font-extrabold tracking-tight">{tripName}</div>
-            <p className="mt-2 text-sm text-white/85">On-tour tools at your fingertips.</p>
+            <TourLeaderPanel bookingId={data.id} clientName={data.client_name || "Active Tour"} destination={data.destination} />
           </div>
-
-          <div className="grid gap-4">
-            <button
-              type="button"
-              className="flex h-16 items-center justify-between rounded-2xl bg-white px-5 text-left text-slate-900 shadow-sm transition hover:shadow-md"
-            >
-              <div>
-                <div className="text-sm font-bold">Update Location</div>
-                <div className="text-xs text-slate-500">Share current position</div>
-              </div>
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 text-red-600">
-                <MapPin className="h-5 w-5" />
-              </div>
-            </button>
-
-            <button
-              type="button"
-              className="flex h-16 items-center justify-between rounded-2xl bg-white px-5 text-left text-slate-900 shadow-sm transition hover:shadow-md"
-            >
-              <div>
-                <div className="text-sm font-bold">Upload Photo</div>
-                <div className="text-xs text-slate-500">Add trip gallery shots</div>
-              </div>
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 text-orange-600">
-                <Camera className="h-5 w-5" />
-              </div>
-            </button>
-          </div>
-        </div>
-      </section>
-    );
+        </section>
+      );
+    }
   }
 
   return (
