@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser"; // Import yang benar
@@ -97,7 +96,22 @@ export default function LoginForm({
                     }, 500);
 
                   } catch (err) {
-                    setMessage(err instanceof Error ? err.message : "Login gagal.");
+                    if (err instanceof Error) {
+                      if (
+                        err.message.includes("Missing NEXT_PUBLIC_SUPABASE_URL") ||
+                        err.message.includes("Missing NEXT_PUBLIC_SUPABASE_ANON_KEY")
+                      ) {
+                        setMessage(
+                          "Konfigurasi Supabase belum diset di Environment Variables (NEXT_PUBLIC_SUPABASE_URL & NEXT_PUBLIC_SUPABASE_ANON_KEY). Set di Cloudflare Pages lalu redeploy.",
+                        );
+                        return;
+                      }
+
+                      setMessage(err.message);
+                      return;
+                    }
+
+                    setMessage("Login gagal.");
                   }
                 });
               }}
