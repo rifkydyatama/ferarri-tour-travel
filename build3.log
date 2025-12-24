@@ -1,0 +1,45 @@
+
+> ferarri-tour-travel@0.1.0 build
+> npm run clean && next build
+
+
+> ferarri-tour-travel@0.1.0 clean
+> node -e "require('fs').rmSync('.next', { recursive: true, force: true })"
+
+   Γû▓ Next.js 15.5.2
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully in 76s
+   Linting and checking validity of types ...
+   Collecting page data ...
+ ΓÜá Using edge runtime on a page currently disables static generation for that page
+   Generating static pages (0/8) ...
+   Generating static pages (2/8) 
+   Generating static pages (4/8) 
+   Generating static pages (6/8) 
+ Γ£ô Generating static pages (8/8)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+Γöî ╞Æ /                                     7.2 kB         159 kB
+Γö£ Γùï /_not-found                            127 B         102 kB
+Γö£ ╞Æ /admin                                 127 B         102 kB
+Γö£ ╞Æ /admin/keuangan                      4.38 kB         106 kB
+Γö£ ╞Æ /admin/konten                        2.85 kB         143 kB
+Γö£ ╞Æ /admin/login                         1.94 kB         157 kB
+Γö£ Γùï /admin/logout                          620 B         155 kB
+Γö£ Γùï /booking/bus                         3.01 kB         105 kB
+Γö£ ╞Æ /login                               1.94 kB         157 kB
+Γö£ ╞Æ /paket/[slug]                          173 B         111 kB
+Γö£ Γùï /syarat-ketentuan                      176 B         147 kB
+Γöö Γùï /tentang-kami                          176 B         147 kB
++ First Load JS shared by all             102 kB
+  Γö£ chunks/255-e3bf15caf1f1e0f9.js       45.7 kB
+  Γö£ chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB
+  Γöö other shared chunks (total)          2.02 kB
+
+
+Γùï  (Static)   prerendered as static content
+╞Æ  (Dynamic)  server-rendered on demand
+

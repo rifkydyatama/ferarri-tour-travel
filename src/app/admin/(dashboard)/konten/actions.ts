@@ -3,6 +3,7 @@
 import { createSupabaseServerClient, requireAdminUser } from "@/lib/supabase/server";
 import type { HomeContent } from "@/lib/landing/types";
 import { revalidatePath } from "next/cache";
+import { diagnoseSupabaseJwtKey, projectRefFromSupabaseUrl } from "@/lib/supabase/diagnostics";
 
 export async function updateHomeContent(newContent: HomeContent) {
   // 1. SECURITY CHECK: Pastikan user adalah Admin
@@ -30,8 +31,25 @@ export async function updateHomeContent(newContent: HomeContent) {
     );
 
   if (error) {
-    console.error("Supabase Error:", error);
-    throw new Error("Gagal menyimpan ke database. Cek log server.");
+    if (error.message?.includes("Invalid API key")) {
+      const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+      const urlRef = projectRefFromSupabaseUrl(url);
+      const keyDiag = diagnoseSupabaseJwtKey(anonKey);
+
+      const mismatchHint =
+        urlRef && keyDiag.projectRefFromIssuer && urlRef !== keyDiag.projectRefFromIssuer
+          ? ` (URL ref: ${urlRef}, Key ref: ${keyDiag.projectRefFromIssuer})`
+          : "";
+
+      throw new Error(
+        "Konfigurasi Supabase tidak valid: Invalid API key. Pastikan NEXT_PUBLIC_SUPABASE_URL & NEXT_PUBLIC_SUPABASE_ANON_KEY berasal dari project Supabase yang sama dan tidak pakai tanda kutip/spasi." +
+          mismatchHint,
+      );
+    }
+
+    throw new Error(`Gagal menyimpan ke database: ${error.message}`);
   }
 
   // 3. REVALIDATE CACHE (Penting!)
