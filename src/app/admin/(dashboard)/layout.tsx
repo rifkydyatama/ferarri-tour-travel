@@ -77,41 +77,31 @@ export default async function AdminLayout({
         </div>
 
         <nav className="flex-1 px-4 space-y-1 overflow-y-auto custom-scrollbar">
-          
+
           <div className="px-4 py-2 text-xs font-bold text-white/30 uppercase tracking-widest">Main</div>
           <NavItem href="/admin" icon={LayoutDashboard} label="Dashboard" />
 
-          {/* === MENU MARKETING === */}
-          {(role === 'marketing' || isExecutive) && (
+          {(role === "marketing" || isExecutive) && (
             <>
               <div className="px-4 py-2 mt-6 text-xs font-bold text-white/30 uppercase tracking-widest">Marketing</div>
+              <NavItem href="/admin/booking/new" icon={BookOpenCheck} label="Input Booking" />
               <NavItem href="/admin/konten" icon={FileText} label="Konten Landing" />
-              <NavItem href="/admin/live-report" icon={Megaphone} label="Live Tour Report" />
-              <NavItem href="/admin/bookings" icon={BookOpenCheck} label="Input Booking" />
             </>
           )}
 
-          {/* === MENU TATA USAHA === */}
-          {(role === 'tata_usaha' || isExecutive) && (
+          {(role === "tata_usaha" || isExecutive) && (
             <>
               <div className="px-4 py-2 mt-6 text-xs font-bold text-white/30 uppercase tracking-widest">Tata Usaha</div>
               <NavItem href="/admin/keuangan" icon={CreditCard} label="Laporan Keuangan" />
-              <NavItem href="/admin/itinerary" icon={CalendarDays} label="Jadwal & Itinerary" />
-              <NavItem href="/admin/armada" icon={BusFront} label="Manajemen Armada" />
-              <NavItem href="/admin/payroll" icon={Users} label="Payroll Karyawan" />
             </>
           )}
 
-           {/* === MENU PIMPINAN (KHUSUS) === */}
-           {isExecutive && (
+          {isExecutive && (
             <>
-              <div className="px-4 py-2 mt-6 text-xs font-bold text-white/30 uppercase tracking-widest">Executive</div>
-              <NavItem href="/admin/tracking" icon={Map} label="Live Tracking Armada" />
-              <NavItem href="/admin/karyawan" icon={Briefcase} label="Laporan Karyawan" />
+              <div className="px-4 py-2 mt-6 text-xs font-bold text-white/30 uppercase tracking-widest">Pimpinan</div>
               <NavItem href="/admin/users" icon={Users} label="Manajemen User" />
             </>
           )}
-          
         </nav>
 
         {/* User Profile */}
