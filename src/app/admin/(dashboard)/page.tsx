@@ -52,7 +52,7 @@ export default async function AdminDashboardPage() {
   // =========================================================
   // 1. DASHBOARD MARKETING (Fokus: Live Report & Booking)
   // =========================================================
-  if (role === 'marketing') {
+   if (role === 'marketing') {
     return (
       <div className="space-y-8 animate-in fade-in">
          <div className="p-8 rounded-[2.5rem] bg-gradient-to-r from-ferrari to-red-600 text-white shadow-xl relative overflow-hidden">
@@ -62,12 +62,12 @@ export default async function AdminDashboardPage() {
                  Jangan lupa update <b>Live Report</b> saat mendampingi tamu. Laporanmu dipantau langsung oleh Pimpinan & TU.
                </p>
                <div className="mt-6 flex gap-3">
-                  <button className="px-6 py-3 bg-white text-ferrari font-bold rounded-full hover:bg-slate-100 transition flex items-center gap-2">
+                  <Link href="/admin/live-report" className="px-6 py-3 bg-white text-ferrari font-bold rounded-full hover:bg-slate-100 transition flex items-center gap-2">
                      <Radio className="w-4 h-4" /> Update Live Report
-                  </button>
-                  <button className="px-6 py-3 bg-black/20 text-white font-bold rounded-full hover:bg-black/30 transition flex items-center gap-2">
+                  </Link>
+                  <Link href="/admin/bookings" className="px-6 py-3 bg-black/20 text-white font-bold rounded-full hover:bg-black/30 transition flex items-center gap-2">
                      + Input Booking Baru
-                  </button>
+                  </Link>
                </div>
             </div>
          </div>
@@ -169,12 +169,12 @@ export default async function AdminDashboardPage() {
                       <button className="w-full text-left px-4 py-3 rounded-xl bg-slate-50 hover:bg-slate-100 font-bold text-sm text-slate-700 flex items-center gap-3">
                          <CalendarClock className="w-4 h-4 text-ferrari" /> Susun Jadwal Bus
                       </button>
-                      <button className="w-full text-left px-4 py-3 rounded-xl bg-slate-50 hover:bg-slate-100 font-bold text-sm text-slate-700 flex items-center gap-3">
+                      <Link href="/admin/keuangan" className="w-full text-left px-4 py-3 rounded-xl bg-slate-50 hover:bg-slate-100 font-bold text-sm text-slate-700 flex items-center gap-3">
                          <FileOutput className="w-4 h-4 text-ferrari" /> Cetak Invoice
-                      </button>
-                      <button className="w-full text-left px-4 py-3 rounded-xl bg-slate-50 hover:bg-slate-100 font-bold text-sm text-slate-700 flex items-center gap-3">
+                      </Link>
+                      <Link href="/admin/payroll" className="w-full text-left px-4 py-3 rounded-xl bg-slate-50 hover:bg-slate-100 font-bold text-sm text-slate-700 flex items-center gap-3">
                          <UserCheck className="w-4 h-4 text-ferrari" /> Input Gaji Karyawan
-                      </button>
+                      </Link>
                    </div>
                 </div>
              </div>
@@ -187,7 +187,7 @@ export default async function AdminDashboardPage() {
   // 3. DASHBOARD PIMPINAN (Fokus: Kontrol Penuh & Live)
   // =========================================================
   // Logic Pimpinan dapat semua akses + Map
-  return (
+   return (
     <div className="space-y-8 animate-in fade-in">
        {/* Section Peta Live Tracking (Visualisasi) */}
        <div className="relative w-full h-80 bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-2xl group">
@@ -230,10 +230,7 @@ export default async function AdminDashboardPage() {
              <h3 className="mt-1 text-lg font-black text-slate-900">Manajemen User</h3>
              <p className="mt-1 text-sm text-slate-500">Tambah user baru untuk Marketing, Tata Usaha, atau Pimpinan.</p>
           </div>
-          <Link
-            href="/admin/users"
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-bold text-white transition hover:bg-slate-800"
-          >
+          <Link href="/admin/users" className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-bold text-white transition hover:bg-slate-800">
             <Users className="h-5 w-5" />
             Tambah User Baru
           </Link>
@@ -244,7 +241,7 @@ export default async function AdminDashboardPage() {
           <div className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm">
              <div className="flex justify-between items-center mb-6">
                 <h3 className="font-black text-lg text-slate-900">FEED LAPANGAN</h3>
-                <Link href="#" className="text-sm font-bold text-ferrari">Lihat Semua</Link>
+                <Link href="/admin/live-report" className="text-sm font-bold text-ferrari">Lihat Semua</Link>
              </div>
              <div className="space-y-6">
                 {liveReports?.map((log) => (

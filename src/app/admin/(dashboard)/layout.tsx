@@ -58,6 +58,7 @@ export default async function AdminLayout({
   }
 
   const { role, user } = auth;
+  const isExecutive = role === "pimpinan" || role === "admin" || role === "superadmin";
 
   return (
     <div className="min-h-svh bg-slate-50 flex">
@@ -81,32 +82,32 @@ export default async function AdminLayout({
           <NavItem href="/admin" icon={LayoutDashboard} label="Dashboard" />
 
           {/* === MENU MARKETING === */}
-          {(role === 'marketing' || role === 'pimpinan') && (
+          {(role === 'marketing' || isExecutive) && (
             <>
               <div className="px-4 py-2 mt-6 text-xs font-bold text-white/30 uppercase tracking-widest">Marketing</div>
               <NavItem href="/admin/konten" icon={FileText} label="Konten Landing" />
-              <NavItem href="#" icon={Megaphone} label="Live Tour Report" />
-              <NavItem href="#" icon={BookOpenCheck} label="Input Booking" />
+              <NavItem href="/admin/live-report" icon={Megaphone} label="Live Tour Report" />
+              <NavItem href="/admin/bookings" icon={BookOpenCheck} label="Input Booking" />
             </>
           )}
 
           {/* === MENU TATA USAHA === */}
-          {(role === 'tata_usaha' || role === 'pimpinan') && (
+          {(role === 'tata_usaha' || isExecutive) && (
             <>
               <div className="px-4 py-2 mt-6 text-xs font-bold text-white/30 uppercase tracking-widest">Tata Usaha</div>
               <NavItem href="/admin/keuangan" icon={CreditCard} label="Laporan Keuangan" />
-              <NavItem href="#" icon={CalendarDays} label="Jadwal & Itinerary" />
-              <NavItem href="#" icon={BusFront} label="Manajemen Armada" />
-              <NavItem href="#" icon={Users} label="Payroll Karyawan" />
+              <NavItem href="/admin/itinerary" icon={CalendarDays} label="Jadwal & Itinerary" />
+              <NavItem href="/admin/armada" icon={BusFront} label="Manajemen Armada" />
+              <NavItem href="/admin/payroll" icon={Users} label="Payroll Karyawan" />
             </>
           )}
 
            {/* === MENU PIMPINAN (KHUSUS) === */}
-           {(role === 'pimpinan') && (
+           {isExecutive && (
             <>
               <div className="px-4 py-2 mt-6 text-xs font-bold text-white/30 uppercase tracking-widest">Executive</div>
-              <NavItem href="#" icon={Map} label="Live Tracking Armada" />
-              <NavItem href="#" icon={Briefcase} label="Laporan Karyawan" />
+              <NavItem href="/admin/tracking" icon={Map} label="Live Tracking Armada" />
+              <NavItem href="/admin/karyawan" icon={Briefcase} label="Laporan Karyawan" />
               <NavItem href="/admin/users" icon={Users} label="Manajemen User" />
             </>
           )}
@@ -142,7 +143,7 @@ export default async function AdminLayout({
           <div className="md:hidden font-black italic text-slate-900">FERRARI<span className="text-ferrari">ADMIN</span></div>
           <div className="hidden md:block">
              <h2 className="text-lg font-bold text-slate-900 capitalize">
-               {role === 'pimpinan' ? 'Executive Control Room' : `Dashboard ${role.replace('_', ' ')}`}
+               {isExecutive ? 'Executive Control Room' : `Dashboard ${role.replace('_', ' ')}`}
              </h2>
           </div>
           <div className="flex items-center gap-4">
