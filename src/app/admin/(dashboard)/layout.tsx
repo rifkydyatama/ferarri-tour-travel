@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { ClipboardPlus, FileText, LayoutDashboard, LogOut, Users, Wallet } from "lucide-react";
 import type { ComponentType, ReactNode } from "react";
 
+export const runtime = "edge";
+
 import { createSupabaseServerClient, requireAdminUser } from "@/lib/supabase/server";
 
 type NavItem = {

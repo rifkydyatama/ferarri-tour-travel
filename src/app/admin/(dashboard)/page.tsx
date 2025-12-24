@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 
 import { createSupabaseServerClient, requireAdminUser } from "@/lib/supabase/server";
 
+export const runtime = "edge";
+
 async function MarketingDashboard({ userId }: { userId: string }) {
   const supabase = await createSupabaseServerClient();
 
