@@ -55,16 +55,12 @@ export async function createSupabaseServerClient() {
   });
 }
 
-export type RequireAdminUserResult =
-  | { ok: true; user: User; role: string }
-  | { ok: false; message: string };
-
-export async function requireAdminUser(): Promise<RequireAdminUserResult> {
+export async function requireAdminUser(): Promise<{ ok: boolean; user: User; role: string }> {
   const supabase = await createSupabaseServerClient();
   if (!supabase) {
-    return { ok: false as const, message: "Supabase env belum di-set." };
+    return { ok: false, user: null as unknown as User, role: "" };
   }
-  const { data, error } = await supabase.auth.getUser();
+  const { data, error } = await supabase.auth.getSession();
 
   if (error?.message?.includes("Invalid API key")) {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -73,49 +69,33 @@ export async function requireAdminUser(): Promise<RequireAdminUserResult> {
     const urlRef = projectRefFromSupabaseUrl(url);
     const keyDiag = diagnoseSupabaseJwtKey(anonKey);
 
-    const mismatchHint =
-      urlRef && keyDiag.projectRefFromIssuer && urlRef !== keyDiag.projectRefFromIssuer
-        ? ` (URL ref: ${urlRef}, Key ref: ${keyDiag.projectRefFromIssuer})`
-        : "";
-
-    return {
-      ok: false as const,
-      message:
-        "Konfigurasi Supabase tidak valid: Invalid API key. Pastikan NEXT_PUBLIC_SUPABASE_URL & NEXT_PUBLIC_SUPABASE_ANON_KEY berasal dari project Supabase yang sama dan tidak pakai tanda kutip/spasi." +
-        mismatchHint,
-    };
+    return { ok: false, user: null as unknown as User, role: "" };
   }
 
-  if (error || !data.user) {
-    return { ok: false as const, message: "Unauthorized. Silakan login." };
+  const sessionUser = data.session?.user;
+  if (error || !sessionUser) {
+    return { ok: false, user: null as unknown as User, role: "" };
   }
 
   const { data: adminRow, error: adminError } = await supabase
     .from("admin_users")
-    .select("user_id, role")
-    .eq("user_id", data.user.id)
+    .select("role")
+    .eq("user_id", sessionUser.id)
     .maybeSingle();
 
   if (adminError) {
-    return {
-      ok: false as const,
-      message:
-        "Akses admin belum siap. Pastikan tabel 'admin_users' sudah dibuat di database Supabase.",
-    };
+    return { ok: false, user: sessionUser, role: "" };
   }
 
   if (!adminRow) {
-    return {
-      ok: false as const,
-      message: "Akun ini belum terdaftar sebagai admin.",
-    };
+    return { ok: false, user: sessionUser, role: "" };
   }
 
-  // Prefer role from admin_users row (if schema supports it). Fallback to user metadata.
-  const roleFromRow = normalizeAdminRole((adminRow as Record<string, unknown> | null)?.role);
-  const roleFromAppMeta = normalizeAdminRole((data.user.app_metadata as Record<string, unknown> | null)?.role);
-  const roleFromUserMeta = normalizeAdminRole((data.user.user_metadata as Record<string, unknown> | null)?.role);
-  const role = roleFromRow ?? roleFromAppMeta ?? roleFromUserMeta ?? "admin";
+  const roleRaw = (adminRow as Record<string, unknown> | null)?.role;
+  const role =
+    typeof roleRaw === "string" && roleRaw.trim().length > 0
+      ? roleRaw.trim().toLowerCase()
+      : "marketing";
 
-  return { ok: true as const, user: data.user, role };
+  return { ok: true, user: sessionUser, role };
 }
