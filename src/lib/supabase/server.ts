@@ -87,7 +87,7 @@ export async function requireAdminUser() {
 
   const { data: adminRow, error: adminError } = await supabase
     .from("admin_users")
-    .select("*")
+    .select("user_id, role")
     .eq("user_id", data.user.id)
     .maybeSingle();
 
