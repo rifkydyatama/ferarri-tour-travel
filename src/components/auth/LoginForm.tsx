@@ -18,12 +18,12 @@ export default function LoginForm({ nextPath = "/admin", initialMessage }: Login
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(initialMessage || "");
 
-  const handleLogin = async (e: React.FormEvent) => {
+ const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
-    const supabase = createSupabaseBrowserClient();
+    const supabase = createClient();
     const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -33,11 +33,17 @@ export default function LoginForm({ nextPath = "/admin", initialMessage }: Login
       setError(signInError.message);
       setLoading(false);
     } else {
-      router.refresh();
-      router.push(nextPath);
+      // PERBAIKAN: Gunakan window.location agar halaman refresh total
+      // Ini memastikan cookie terbaca sempurna oleh server
+      router.refresh(); 
+      
+      // Tunggu sebentar biar cookie tersimpan
+      setTimeout(() => {
+        window.location.href = nextPath; 
+      }, 500);
     }
   };
-
+  
   return (
     <div className="relative min-h-svh flex items-center justify-center overflow-hidden bg-slate-900">
       {/* Background Ambience */}
