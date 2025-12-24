@@ -1,6 +1,7 @@
 import "server-only";
 
 import { createServerClient } from "@supabase/ssr";
+import type { User } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 import { diagnoseSupabaseJwtKey, projectRefFromSupabaseUrl } from "./diagnostics";
 
@@ -54,7 +55,11 @@ export async function createSupabaseServerClient() {
   });
 }
 
-export async function requireAdminUser() {
+export type RequireAdminUserResult =
+  | { ok: true; user: User; role: string }
+  | { ok: false; message: string };
+
+export async function requireAdminUser(): Promise<RequireAdminUserResult> {
   const supabase = await createSupabaseServerClient();
   if (!supabase) {
     return { ok: false as const, message: "Supabase env belum di-set." };
@@ -107,7 +112,6 @@ export async function requireAdminUser() {
   }
 
   // Prefer role from admin_users row (if schema supports it). Fallback to user metadata.
-  // Note: we select '*' above so older DB schemas (without 'role') won't error.
   const roleFromRow = normalizeAdminRole((adminRow as Record<string, unknown> | null)?.role);
   const roleFromAppMeta = normalizeAdminRole((data.user.app_metadata as Record<string, unknown> | null)?.role);
   const roleFromUserMeta = normalizeAdminRole((data.user.user_metadata as Record<string, unknown> | null)?.role);
