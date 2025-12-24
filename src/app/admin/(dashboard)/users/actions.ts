@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createSupabaseAdmin } from "@/lib/supabase/admin";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { requireAdminUser } from "@/lib/supabase/server";
 
 export type AdminManagedRole = "marketing" | "tata_usaha" | "pimpinan" | "admin";
@@ -31,7 +31,13 @@ export async function createUser(input: CreateUserInput): Promise<CreateUserResu
     return { ok: false, message: "Lengkapi Email, Password, Nama, dan Role." };
   }
 
-  const supabase = createSupabaseAdmin();
+  const supabase = createSupabaseAdminClient();
+  if (!supabase) {
+    return {
+      ok: false,
+      message: "Konfigurasi server admin belum siap (SUPABASE_SERVICE_ROLE_KEY / SUPABASE_URL).",
+    };
+  }
 
   const { data: created, error: createError } = await supabase.auth.admin.createUser({
     email,

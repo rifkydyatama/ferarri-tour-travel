@@ -1,11 +1,12 @@
-import { createSupabaseAdmin } from "@/lib/supabase/admin";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { requireAdminUser } from "@/lib/supabase/server";
 import UsersClient, { type UserRow } from "./UsersClient";
 
 export const runtime = "edge";
 
 async function loadUsers(): Promise<UserRow[]> {
-  const supabase = createSupabaseAdmin();
+  const supabase = createSupabaseAdminClient();
+  if (!supabase) return [];
 
   const { data: adminUsers } = await supabase
     .from("admin_users")
