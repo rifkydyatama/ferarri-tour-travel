@@ -1,6 +1,7 @@
 import { createSupabaseServerClient, requireAdminUser } from "@/lib/supabase/server";
 import { 
    TrendingUp,
+   Users,
    Bus,
    UserCheck,
    CalendarClock,
@@ -221,6 +222,21 @@ export default async function AdminDashboardPage() {
                 </div>
              </div>
           </div>
+       </div>
+
+       <div className="bg-white p-6 rounded-[2rem] border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Quick Access</p>
+             <h3 className="mt-1 text-lg font-black text-slate-900">Manajemen User</h3>
+             <p className="mt-1 text-sm text-slate-500">Tambah user baru untuk Marketing, Tata Usaha, atau Pimpinan.</p>
+          </div>
+          <Link
+            href="/admin/users"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-bold text-white transition hover:bg-slate-800"
+          >
+            <Users className="h-5 w-5" />
+            Tambah User Baru
+          </Link>
        </div>
 
        <div className="grid lg:grid-cols-2 gap-8">

@@ -107,6 +107,7 @@ export default async function AdminLayout({
               <div className="px-4 py-2 mt-6 text-xs font-bold text-white/30 uppercase tracking-widest">Executive</div>
               <NavItem href="#" icon={Map} label="Live Tracking Armada" />
               <NavItem href="#" icon={Briefcase} label="Laporan Karyawan" />
+              <NavItem href="/admin/users" icon={Users} label="Manajemen User" />
             </>
           )}
           
