@@ -4,6 +4,37 @@ import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { diagnoseSupabaseJwtKey, projectRefFromSupabaseUrl } from "./diagnostics";
 
+export type AdminRole =
+  | "superadmin"
+  | "admin"
+  | "marketing"
+  | "tata_usaha"
+  | "pimpinan"
+  | "content"
+  | "finance"
+  | "ops"
+  | "viewer";
+
+function normalizeAdminRole(value: unknown): AdminRole | undefined {
+  if (typeof value !== "string") return undefined;
+  const v = value.trim().toLowerCase();
+  if (!v) return undefined;
+  if (
+    v === "superadmin" ||
+    v === "admin" ||
+    v === "marketing" ||
+    v === "tata_usaha" ||
+    v === "pimpinan" ||
+    v === "content" ||
+    v === "finance" ||
+    v === "ops" ||
+    v === "viewer"
+  ) {
+    return v;
+  }
+  return "admin";
+}
+
 export async function createSupabaseServerClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -56,7 +87,7 @@ export async function requireAdminUser() {
 
   const { data: adminRow, error: adminError } = await supabase
     .from("admin_users")
-    .select("user_id")
+    .select("*")
     .eq("user_id", data.user.id)
     .maybeSingle();
 
@@ -75,5 +106,12 @@ export async function requireAdminUser() {
     };
   }
 
-  return { ok: true as const, user: data.user };
+  // Prefer role from admin_users row (if schema supports it). Fallback to user metadata.
+  // Note: we select '*' above so older DB schemas (without 'role') won't error.
+  const roleFromRow = normalizeAdminRole((adminRow as Record<string, unknown> | null)?.role);
+  const roleFromAppMeta = normalizeAdminRole((data.user.app_metadata as Record<string, unknown> | null)?.role);
+  const roleFromUserMeta = normalizeAdminRole((data.user.user_metadata as Record<string, unknown> | null)?.role);
+  const role = roleFromRow ?? roleFromAppMeta ?? roleFromUserMeta ?? "admin";
+
+  return { ok: true as const, user: data.user, role };
 }

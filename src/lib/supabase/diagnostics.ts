@@ -11,7 +11,6 @@ function base64UrlDecode(input: string) {
     return new TextDecoder().decode(bytes);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   return Buffer.from(padded, "base64").toString("utf8");
 }
 
