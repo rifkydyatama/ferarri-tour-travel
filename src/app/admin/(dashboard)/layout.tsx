@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
+export const runtime = "edge";
+
 // Helper component untuk menu item biar kodenya rapi
 type NavItemProps = {
   href: string;

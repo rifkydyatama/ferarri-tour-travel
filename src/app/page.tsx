@@ -12,6 +12,8 @@ import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import { getHomeContent } from "@/lib/landing/getHomeContent";
 
+export const runtime = "edge";
+
 export default async function Home() {
   const content = await getHomeContent();
 
