@@ -1,36 +1,49 @@
-import Navbar from "@/components/Navbar";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import Hero from "@/components/Hero";
-import TrustedBy from "@/components/TrustedBy";
 import Features from "@/components/Features";
 import StudentPackages from "@/components/StudentPackages";
-import HowItWorks from "@/components/HowItWorks";
-import Destinations from "@/components/Destinations";
-import Gallery from "@/components/Gallery";
 import Testimonials from "@/components/Testimonials";
 import CallToAction from "@/components/CallToAction";
-import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
-import { getHomeContent } from "@/lib/landing/getHomeContent";
+import Navbar from "@/components/Navbar";
 
 export const runtime = "edge";
 
 export default async function Home() {
-  const content = await getHomeContent();
+  const supabase = await createSupabaseServerClient();
+  
+  // Ambil konten dari CMS Database
+  const { data: content } = await supabase!
+    .from("landing_content")
+    .select("*")
+    .single();
 
+  // Fallback jika database belum siap/kosong
+  const heroTitle = content?.hero_title || "Jelajahi Dunia Bersama Ferrari Tour & Travel";
+  const heroSubtitle = content?.hero_subtitle || "Sahabat perjalanan terbaik Anda untuk pengalaman tak terlupakan.";
+  
   return (
-    <div className="min-h-svh bg-white text-slate-900">
-      <Navbar content={content.navbar} />
-      <Hero content={content.hero} />
-      <TrustedBy content={content.trustedBy} />
-      <Features content={content.features} />
-      <StudentPackages content={content.packages} />
-      <HowItWorks content={content.howItWorks} />
-      <Destinations content={content.destinations} />
-      <Gallery content={content.gallery} />
-      <Testimonials content={content.testimonials} />
-      <CallToAction content={content.cta} />
-      <FAQ content={content.faq} />
-      <Footer content={content.footer} />
-    </div>
+    <main className="min-h-screen bg-slate-50">
+      <Navbar />
+      
+      {/* Dynamic Hero Section */}
+      <div className="relative">
+         <Hero 
+            title={heroTitle}
+            subtitle={heroSubtitle}
+            ctaText={content?.hero_cta_text || "Pesan Sekarang"}
+         />
+      </div>
+
+      <Features 
+         f1Title={content?.feature_1_title} f1Desc={content?.feature_1_desc}
+         f2Title={content?.feature_2_title} f2Desc={content?.feature_2_desc}
+      />
+      
+      <StudentPackages />
+      <Testimonials />
+      <CallToAction />
+      <Footer />
+    </main>
   );
 }
