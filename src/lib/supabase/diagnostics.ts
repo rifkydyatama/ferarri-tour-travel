@@ -3,6 +3,15 @@ import "server-only";
 function base64UrlDecode(input: string) {
   const normalized = input.replace(/-/g, "+").replace(/_/g, "/");
   const padded = normalized + "=".repeat((4 - (normalized.length % 4)) % 4);
+
+  // Edge runtime prefers Web APIs; Node has Buffer.
+  if (typeof globalThis.atob === "function") {
+    const binary = globalThis.atob(padded);
+    const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   return Buffer.from(padded, "base64").toString("utf8");
 }
 

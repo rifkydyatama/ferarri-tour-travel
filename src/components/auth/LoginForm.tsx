@@ -26,6 +26,44 @@ export default function LoginForm({
     return !email.trim() || !password.trim() || isPending;
   }, [email, password, isPending]);
 
+  const invalidKeyHint = useMemo(() => {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (!url || !anonKey) return null;
+
+    let urlRef: string | null = null;
+    try {
+      const parsed = new URL(url);
+      const match = parsed.hostname.match(/^([a-z0-9-]+)\.supabase\.co$/i);
+      urlRef = match?.[1] ?? null;
+    } catch {
+      urlRef = null;
+    }
+
+    let keyRef: string | null = null;
+    try {
+      const parts = anonKey.split(".");
+      if (parts.length >= 2 && typeof globalThis.atob === "function") {
+        const normalized = parts[1].replace(/-/g, "+").replace(/_/g, "/");
+        const padded = normalized + "=".repeat((4 - (normalized.length % 4)) % 4);
+        const payloadJson = globalThis.atob(padded);
+        const payload = JSON.parse(payloadJson) as { iss?: string };
+        const issuer = payload.iss;
+        if (issuer) {
+          const match = issuer.match(/^https:\/\/([a-z0-9-]+)\.supabase\.co\//i);
+          keyRef = match?.[1] ?? null;
+        }
+      }
+    } catch {
+      keyRef = null;
+    }
+
+    if (urlRef && keyRef && urlRef !== keyRef) {
+      return ` (URL ref: ${urlRef}, Key ref: ${keyRef})`;
+    }
+    return null;
+  }, []);
+
   return (
     <div className="relative min-h-svh overflow-hidden bg-slate-950 text-white">
       {/* Background Effects */}
@@ -82,6 +120,14 @@ export default function LoginForm({
                     });
 
                     if (error) {
+                      if (error.message?.includes("Invalid API key")) {
+                        setMessage(
+                          "Konfigurasi Supabase tidak valid: Invalid API key. Pastikan NEXT_PUBLIC_SUPABASE_URL & NEXT_PUBLIC_SUPABASE_ANON_KEY berasal dari project yang sama dan tidak pakai tanda kutip/spasi." +
+                            (invalidKeyHint ?? ""),
+                        );
+                        return;
+                      }
+
                       setMessage(error.message);
                       return;
                     }
