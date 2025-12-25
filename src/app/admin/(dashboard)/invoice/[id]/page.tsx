@@ -31,11 +31,8 @@ interface Booking {
   payments: Payment[];
 }
 
-interface InvoicePageProps {
-  params: { id: string };
-}
-
-export default async function InvoicePage({ params }: InvoicePageProps) {
+export default async function InvoicePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const { ok } = await requireAdminUser();
   if (!ok) redirect("/admin/login");
 
@@ -48,7 +45,6 @@ export default async function InvoicePage({ params }: InvoicePageProps) {
       </div>
     );
   }
-  const { id } = params; 
 
   // Ambil Data Booking & Payment
   const { data: booking } = await supabase

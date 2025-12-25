@@ -58,9 +58,9 @@ function formatIDR(value: number) {
 export default async function PackageDetailPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = params;
+  const { slug } = await params;
   
   const supabase = await createSupabaseServerClient();
   if (!supabase) {

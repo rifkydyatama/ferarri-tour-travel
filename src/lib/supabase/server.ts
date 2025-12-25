@@ -3,7 +3,6 @@ import "server-only";
 import { createServerClient } from "@supabase/ssr";
 import type { User } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
-import { diagnoseSupabaseJwtKey, projectRefFromSupabaseUrl } from "./diagnostics";
 
 export type AdminRole =
   | "superadmin"

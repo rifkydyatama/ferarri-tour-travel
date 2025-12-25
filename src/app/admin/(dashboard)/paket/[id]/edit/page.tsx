@@ -27,9 +27,9 @@ interface TourPackage {
 export default async function EditPackagePage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params;
+  const { id } = await params;
   const { ok, role } = await requireAdminUser();
   if (!ok || (role !== "marketing" && role !== "pimpinan")) redirect("/admin/login");
 

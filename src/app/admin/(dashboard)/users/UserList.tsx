@@ -6,7 +6,7 @@ import { AdminUser } from "./types";
 // import { addUser, updateUser, deleteUser } from "./actions";
 
 export default function UserList({ users: initialUsers }: { users: AdminUser[] }) {
-  const [users, setUsers] = useState(initialUsers);
+  const [users] = useState(initialUsers);
   const [showAddForm, setShowAddForm] = useState(false);
 
   return (
@@ -62,7 +62,7 @@ function AddUserForm() {
     // const [isPending, startTransition] = useTransition();
     const [error, setError] = useState<string | null>(null);
 
-    async function handleSubmit(_formData: FormData) {
+    async function handleSubmit() {
         setError(null);
         // startTransition(async () => {
         //     const result = await addUser(formData);
