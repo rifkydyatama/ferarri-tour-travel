@@ -19,7 +19,7 @@ export default function Navbar({ content }: { content?: NavbarContent }) {
   const brandLabel = content?.brandLabel ?? "FERRARI";
   const links = content?.links ?? [
     { label: "Why Us", href: "/#tentang" },
-    { label: "Paket", href: "/#paket-pelajar" },
+    { label: "Semua Paket", href: "/paket" },
     { label: "Galeri", href: "/#armada" },
   ];
   const cta = content?.cta ?? { label: "Gas Booking 🚀", href: "/booking/bus" };

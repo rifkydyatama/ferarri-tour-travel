@@ -26,12 +26,17 @@ export default async function AdminDashboardLayout({
       title: "MARKETING",
       items: [
         { href: "/admin/booking/new", label: "Input Booking", icon: "booking" },
+        { href: "/admin/paket", label: "Paket Tour", icon: "content" },
         { href: "/admin/konten", label: "Landing Content", icon: "content" },
       ],
     });
   }
 
   if (role === "tata_usaha") {
+    sections.push({
+      title: "OPERATIONS",
+      items: [{ href: "/admin/penugasan", label: "Penugasan", icon: "users" }],
+    });
     sections.push({
       title: "FINANCE",
       items: [{ href: "/admin/keuangan", label: "Finance Report", icon: "finance" }],
@@ -45,7 +50,10 @@ export default async function AdminDashboardLayout({
     });
     sections.push({
       title: "EXECUTIVE",
-      items: [{ href: "/admin/users", label: "User Management", icon: "users" }],
+      items: [
+        { href: "/admin/users", label: "User Management", icon: "users" },
+        { href: "/admin/penugasan", label: "Penugasan", icon: "users" },
+      ],
     });
   }
 

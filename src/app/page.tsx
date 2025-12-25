@@ -6,17 +6,28 @@ import Testimonials from "@/components/Testimonials";
 import CallToAction from "@/components/CallToAction";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import ErrorDisplay from "@/components/ErrorDisplay";
 
 export const runtime = "edge";
 
 export default async function Home() {
   const supabase = await createSupabaseServerClient();
   
+  if (!supabase) {
+    return <ErrorDisplay message="Koneksi ke database gagal. Periksa konfigurasi server." />;
+  }
+
   // Ambil konten dari CMS Database
-  const { data: content } = await supabase!
+  const { data: content, error } = await supabase
     .from("landing_content")
     .select("*")
     .single();
+  
+  // Gracefully handle error fetching content, but don't crash the page.
+  // The page can still render with default text.
+  if (error) {
+    console.error("Error fetching landing page content:", error.message);
+  }
 
   // Fallback jika database belum siap/kosong
   const heroTitle = content?.hero_title || "Jelajahi Dunia Bersama Ferrari Tour & Travel";

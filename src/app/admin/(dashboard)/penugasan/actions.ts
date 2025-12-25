@@ -6,7 +6,7 @@ import { createSupabaseServerClient, requireAdminUser } from "@/lib/supabase/ser
 
 export async function assignTourLeader(bookingId: string, userId: string) {
   const { ok, role } = await requireAdminUser();
-  if (!ok || role !== "tata_usaha") {
+  if (!ok || !["tata_usaha", "pimpinan"].includes(role)) {
     return { ok: false, error: "Unauthorized" } as const;
   }
 

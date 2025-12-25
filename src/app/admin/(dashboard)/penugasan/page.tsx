@@ -8,7 +8,7 @@ export const runtime = "edge";
 
 export default async function TourAssignmentPage() {
   const { ok, role } = await requireAdminUser();
-  if (!ok || role !== "tata_usaha") redirect("/admin/login");
+  if (!ok || !["tata_usaha", "pimpinan"].includes(role)) redirect("/admin/login");
 
   const supabase = await createSupabaseServerClient();
   if (!supabase) {
