@@ -5,5 +5,8 @@
   "files.associations": {
     "**/supabase/schema.sql": "postgresql",
     "**/supabase/migrations/*.sql": "postgresql"
-  }
+  },
+  "gemini-cli.debug.logging.enabled": true,
+  "geminicodeassist.codeGenerationPaneViewEnabled": true,
+  "geminicodeassist.verboseLogging": true
 }

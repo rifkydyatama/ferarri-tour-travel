@@ -6,7 +6,7 @@ import { ArrowUpRight, MapPin, Clock, Tag } from "lucide-react";
 // This is safer than a shared, potentially inaccurate, manual type.
 type PackageCardProps = {
   pkg: {
-    id: any; // Add id to be used as key
+    id: string; // The unique identifier for the package, used as a key.
     slug: string;
     hero_image: string;
     title: string;

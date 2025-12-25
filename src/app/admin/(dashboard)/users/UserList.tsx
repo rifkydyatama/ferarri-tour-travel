@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PlusCircle, Trash2, Edit, User, Loader2 } from "lucide-react";
+import { PlusCircle, Trash2, Edit } from "lucide-react";
 import { AdminUser } from "./types";
 // import { addUser, updateUser, deleteUser } from "./actions";
 
@@ -21,10 +21,7 @@ export default function UserList({ users: initialUsers }: { users: AdminUser[] }
         </button>
       </div>
 
-      {showAddForm && <AddUserForm onUserAdded={(user) => {
-        setUsers([user, ...users]);
-        setShowAddForm(false);
-      }} />}
+      {showAddForm && <AddUserForm />}
 
       <div className="rounded-2xl border border-white/10 bg-white/5">
         <table className="w-full text-left text-white">
@@ -61,11 +58,11 @@ export default function UserList({ users: initialUsers }: { users: AdminUser[] }
   );
 }
 
-function AddUserForm({ onUserAdded }: { onUserAdded: (user: AdminUser) => void }) {
+function AddUserForm() {
     // const [isPending, startTransition] = useTransition();
     const [error, setError] = useState<string | null>(null);
 
-    async function handleSubmit(formData: FormData) {
+    async function handleSubmit(_formData: FormData) {
         setError(null);
         // startTransition(async () => {
         //     const result = await addUser(formData);

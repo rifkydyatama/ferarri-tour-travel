@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -17,6 +16,16 @@ type PackagesPageProps = {
     location?: string;
   };
 };
+
+interface TourPackage {
+  id: string;
+  slug: string;
+  title: string;
+  location: string;
+  duration: string;
+  price_from: number;
+  hero_image: string;
+}
 
 export default async function PackagesPage({ searchParams }: PackagesPageProps) {
   const supabase = await createSupabaseServerClient();
@@ -52,7 +61,7 @@ export default async function PackagesPage({ searchParams }: PackagesPageProps) 
     .eq("is_active", true);
 
   const uniqueLocations = locationsData
-    ? [...new Set(locationsData.map((item) => item.location))].sort()
+    ? [...new Set(locationsData.map((item: { location: string }) => item.location))].sort()
     : [];
 
   return (
@@ -87,7 +96,7 @@ export default async function PackagesPage({ searchParams }: PackagesPageProps) 
 
           {packages && packages.length > 0 && (
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {(packages as any[]).map((pkg) => (
+              {(packages as TourPackage[]).map((pkg) => (
                 <PackageCard key={pkg.id} pkg={pkg} />
               ))}
             </div>
@@ -99,3 +108,5 @@ export default async function PackagesPage({ searchParams }: PackagesPageProps) 
     </div>
   );
 }
+
+

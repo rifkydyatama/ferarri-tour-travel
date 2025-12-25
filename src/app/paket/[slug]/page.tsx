@@ -16,6 +16,37 @@ import ErrorDisplay from "@/components/ErrorDisplay";
 
 export const runtime = "edge";
 
+// Interfaces for type safety
+interface ItineraryItem {
+  day: string;
+  items: string[];
+}
+
+interface TourPackage {
+  id: string;
+  slug: string;
+  is_active: boolean;
+  hero_image: string;
+  title: string;
+  duration: string;
+  location: string;
+  price_from: number;
+  highlights: string[] | null;
+  itinerary: ItineraryItem[] | null;
+  inclusions: string[] | null;
+  exclusions: string[] | null;
+}
+
+interface Review {
+    id: string;
+    package_id: string;
+    reviewer_name: string;
+    review_text: string;
+    rating: number;
+    created_at: string;
+}
+
+
 function formatIDR(value: number) {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
@@ -27,9 +58,9 @@ function formatIDR(value: number) {
 export default async function PackageDetailPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }) {
-  const { slug } = await params;
+  const { slug } = params;
   
   const supabase = await createSupabaseServerClient();
   if (!supabase) {
@@ -41,7 +72,7 @@ export default async function PackageDetailPage({
     .select("*")
     .eq("slug", slug)
     .eq("is_active", true)
-    .single();
+    .single<TourPackage>();
 
   if (pkgError || !pkg) {
     // Log the error for debugging if needed
@@ -132,7 +163,7 @@ export default async function PackageDetailPage({
                   Highlights
                 </h2>
                 <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                  {(pkg.highlights as string[]).map((h) => (
+                  {pkg.highlights.map((h) => (
                     <div key={h} className="flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3">
                       <CheckCircle2 className="h-5 w-5 text-leaf" />
                       <span className="text-sm font-semibold text-slate-800">{h}</span>
@@ -150,7 +181,7 @@ export default async function PackageDetailPage({
                 </h2>
 
                 <div className="mt-6 grid gap-6">
-                  {(pkg.itinerary as any[]).map((dayBlock, idx) => (
+                  {pkg.itinerary.map((dayBlock, idx) => (
                     <div key={dayBlock.day} className="relative">
                       <div className="flex items-start gap-4">
                         <div className="relative">
@@ -165,7 +196,7 @@ export default async function PackageDetailPage({
                         <div className="flex-1">
                           <p className="text-sm font-extrabold text-slate-900">{dayBlock.day}</p>
                           <ul className="mt-3 grid gap-2">
-                            {(dayBlock.items as string[]).map((item) => (
+                            {dayBlock.items.map((item) => (
                               <li key={item} className="text-sm leading-7 text-slate-600">
                                 {item}
                               </li>
@@ -187,7 +218,7 @@ export default async function PackageDetailPage({
                     Inclusions
                   </h2>
                   <ul className="mt-5 grid gap-3">
-                    {(pkg.inclusions as string[]).map((item) => (
+                    {pkg.inclusions.map((item) => (
                       <li key={item} className="flex items-start gap-3">
                         <CheckCircle2 className="mt-0.5 h-5 w-5 text-leaf" />
                         <span className="text-sm leading-7 text-slate-700">{item}</span>
@@ -203,7 +234,7 @@ export default async function PackageDetailPage({
                     Exclusions
                   </h2>
                   <ul className="mt-5 grid gap-3">
-                    {(pkg.exclusions as string[]).map((item) => (
+                    {pkg.exclusions.map((item) => (
                       <li key={item} className="flex items-start gap-3">
                         <XCircle className="mt-0.5 h-5 w-5 text-ferrari" />
                         <span className="text-sm leading-7 text-slate-700">{item}</span>
@@ -228,7 +259,7 @@ export default async function PackageDetailPage({
                         </div>
                     </div>
                     <div className="lg:col-start-1 lg:row-start-1">
-                        <ReviewList reviews={reviews || []} />
+                        <ReviewList reviews={(reviews as Review[]) || []} />
                     </div>
                 </div>
             </div>

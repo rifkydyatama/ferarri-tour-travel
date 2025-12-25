@@ -6,6 +6,20 @@ import { id } from "date-fns/locale";
 
 export const runtime = "edge";
 
+// Define interfaces for type safety
+interface Payment {
+  amount: number;
+}
+
+interface BookingWithPayments {
+  id: string;
+  client_name: string;
+  destination: string;
+  tour_date: string;
+  total_price: number;
+  payments: Payment[];
+}
+
 export default async function KeuanganPage() {
   const { ok } = await requireAdminUser();
   if (!ok) redirect("/admin/login");
@@ -59,8 +73,8 @@ export default async function KeuanganPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {bookings?.map((item) => {
-                const totalBayar = item.payments?.reduce((acc: number, curr: any) => acc + curr.amount, 0) || 0;
+              {(bookings as BookingWithPayments[])?.map((item) => {
+                const totalBayar = item.payments?.reduce((acc: number, curr: Payment) => acc + curr.amount, 0) || 0;
                 const sisa = (item.total_price || 0) - totalBayar;
                 const lunas = sisa <= 0 && item.total_price > 0;
 

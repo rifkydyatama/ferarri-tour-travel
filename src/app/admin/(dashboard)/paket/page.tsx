@@ -1,9 +1,21 @@
 import Link from "next/link";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { Plus, Package, MapPin, Clock, Tag, Eye, Edit, Trash2 } from "lucide-react";
 import { createSupabaseServerClient, requireAdminUser } from "@/lib/supabase/server";
 
 export const runtime = "edge";
+
+interface TourPackage {
+  id: string;
+  hero_image: string;
+  title: string;
+  location: string;
+  is_active: boolean;
+  duration: string;
+  price_from: number;
+  slug: string;
+}
 
 function formatIDR(value: number) {
   return new Intl.NumberFormat("id-ID", {
@@ -47,14 +59,15 @@ export default async function AdminPackagesPage() {
         </div>
       ) : packages && packages.length > 0 ? (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {packages.map((pkg) => (
+          {(packages as TourPackage[]).map((pkg) => (
             <div key={pkg.id} className="group relative overflow-hidden rounded-3xl bg-slate-900 border border-white/10 shadow-xl transition hover:border-white/20">
               {/* Image Preview */}
               <div className="relative h-48 w-full overflow-hidden">
-                <img 
+                <Image 
                   src={pkg.hero_image} 
                   alt={pkg.title} 
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-110" 
+                  fill
+                  className="object-cover transition duration-500 group-hover:scale-110" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">

@@ -4,12 +4,32 @@ import { updatePackage } from "../../actions";
 
 export const runtime = "edge";
 
+interface ItineraryItem {
+  day: string;
+  items: string[];
+}
+
+interface TourPackage {
+  id: string;
+  title: string;
+  slug: string;
+  location: string;
+  duration: string;
+  price_from: number;
+  hero_image: string;
+  highlights: string[] | null;
+  inclusions: string[] | null;
+  exclusions: string[] | null;
+  itinerary: ItineraryItem[] | null;
+  is_active: boolean;
+}
+
 export default async function EditPackagePage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params;
+  const { id } = params;
   const { ok, role } = await requireAdminUser();
   if (!ok || (role !== "marketing" && role !== "pimpinan")) redirect("/admin/login");
 
@@ -18,15 +38,15 @@ export default async function EditPackagePage({
     .from("tour_packages")
     .select("*")
     .eq("id", id)
-    .single();
+    .single<TourPackage>();
 
   if (!pkg) notFound();
 
   // Helper to format JSON arrays back to textarea string
-  const arrayToText = (arr: string[] | any) => (Array.isArray(arr) ? arr.join("\n") : "");
+  const arrayToText = (arr: string[] | null) => (Array.isArray(arr) ? arr.join("\n") : "");
   
   // Helper to format itinerary back to textarea string
-  const itineraryToText = (itinerary: any[]) => {
+  const itineraryToText = (itinerary: ItineraryItem[] | null) => {
     if (!Array.isArray(itinerary)) return "";
     return itinerary.map(item => `${item.day}\n${item.items.join("\n")}`).join("\n\n");
   };

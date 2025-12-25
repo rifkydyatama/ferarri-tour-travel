@@ -63,12 +63,6 @@ export async function requireAdminUser(): Promise<{ ok: boolean; user: User; rol
   const { data, error } = await supabase.auth.getSession();
 
   if (error?.message?.includes("Invalid API key")) {
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-    const urlRef = projectRefFromSupabaseUrl(url);
-    const keyDiag = diagnoseSupabaseJwtKey(anonKey);
-
     return { ok: false, user: null as unknown as User, role: "" };
   }
 

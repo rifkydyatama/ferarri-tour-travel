@@ -1,6 +1,5 @@
 import { createSupabaseServerClient, requireAdminUser } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import Image from "next/image";
 import { format } from "date-fns";
 import { id as ind } from "date-fns/locale";
 
@@ -15,23 +14,52 @@ const formatRupiah = (number: number) => {
   }).format(number);
 };
 
-export default async function InvoicePage({ params }: { params: { id: string } }) {
+interface Payment {
+  id: string;
+  amount: number;
+  payment_date: string;
+  payment_type: string;
+}
+
+interface Booking {
+  id: string;
+  client_name: string;
+  destination: string;
+  tour_date: string;
+  pax_count: number;
+  total_price: number;
+  payments: Payment[];
+}
+
+interface InvoicePageProps {
+  params: { id: string };
+}
+
+export default async function InvoicePage({ params }: InvoicePageProps) {
   const { ok } = await requireAdminUser();
   if (!ok) redirect("/admin/login");
 
   const supabase = await createSupabaseServerClient();
-  const { id } = await params; // Akses params (Next.js 15)
+    if (!supabase) {
+    return (
+      <div className="p-8">
+        <p className="text-red-500">Error: Koneksi ke database gagal.</p>
+        <p>Pastikan variabel lingkungan Supabase sudah terkonfigurasi dengan benar.</p>
+      </div>
+    );
+  }
+  const { id } = params; 
 
   // Ambil Data Booking & Payment
-  const { data: booking } = await supabase!
+  const { data: booking } = await supabase
     .from("bookings")
     .select("*, payments(*)")
     .eq("id", id)
-    .single();
+    .single<Booking>();
 
   if (!booking) return <div>Data tidak ditemukan</div>;
 
-  const totalBayar = booking.payments?.reduce((acc: number, curr: any) => acc + curr.amount, 0) || 0;
+  const totalBayar = booking.payments?.reduce((acc: number, curr: Payment) => acc + curr.amount, 0) || 0;
   const sisaTagihan = booking.total_price - totalBayar;
 
   return (
@@ -128,7 +156,7 @@ export default async function InvoicePage({ params }: { params: { id: string } }
           <h4 className="font-bold text-slate-700 mb-4">Riwayat Pembayaran Masuk</h4>
           {booking.payments && booking.payments.length > 0 ? (
             <ul className="space-y-2">
-              {booking.payments.map((pay: any) => (
+              {booking.payments.map((pay: Payment) => (
                 <li key={pay.id} className="flex justify-between text-sm border-b border-slate-200 pb-2 last:border-0">
                   <span>{format(new Date(pay.payment_date), "dd/MM/yyyy")} — <span className="font-bold">{pay.payment_type}</span></span>
                   <span className="font-mono">{formatRupiah(pay.amount)}</span>
