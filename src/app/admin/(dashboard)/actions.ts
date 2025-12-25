@@ -53,6 +53,4 @@ export async function submitLiveReport(
 
   revalidatePath("/admin");
   return { ok: true };
-}"use server";
-
-import { revalidatePath } from "next/cache";
+}
