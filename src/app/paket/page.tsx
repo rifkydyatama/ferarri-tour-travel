@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 type PackagesPageProps = {
-  searchParams?: {
+  searchParams: {
     q?: string;
     location?: string;
   };
@@ -108,5 +108,3 @@ export default async function PackagesPage({ searchParams }: PackagesPageProps) 
     </div>
   );
 }
-
-

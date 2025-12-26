@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { format } from "date-fns";
 import { id as ind } from "date-fns/locale";
 
+import { PageProps } from "@/lib/types";
+
 export const runtime = "edge";
 
 // Helper Format Rupiah
@@ -31,8 +33,10 @@ interface Booking {
   payments: Payment[];
 }
 
-export default async function InvoicePage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+type InvoicePageProps = PageProps<{ id: string }>;
+
+export default async function InvoicePage({ params }: InvoicePageProps) {
+  const { id } = params;
   const { ok } = await requireAdminUser();
   if (!ok) redirect("/admin/login");
 
